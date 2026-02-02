@@ -885,31 +885,34 @@
             }
         });
 
-      submitBtn.addEventListener('click', () => {
+     submitBtn.addEventListener('click', () => {
     if (validateStep()) {
         saveResponses();
         
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxpAYb_wxG6c8BJjR9JO5xScLLPAQyA4vAnlfmhJzt1yZR_9Ck5xhzwhSkhlgUaUqbN/exec'; // *** Use your /exec URL ***
+        // PASTE YOUR NEW URL FROM THE STEP ABOVE HERE
+        const scriptURL = 'PASTE_NEW_URL_HERE';
 
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
 
-        // We use URLSearchParams because it is the most reliable 
-        // way for Google Sheets to "see" every individual column.
+        // We use URLSearchParams to ensure Google sees individual columns
         const formData = new URLSearchParams();
         for (const key in responses) {
-            // If the answer is an array (like multi-checkboxes), join with commas
             const value = Array.isArray(responses[key]) ? responses[key].join(', ') : responses[key];
             formData.append(key, value);
         }
 
         fetch(scriptURL, {
             method: 'POST',
-            mode: 'no-cors', // Essential for GitHub-to-Google
-            body: formData
+            mode: 'no-cors', // This bypasses the 405/CORS blocks
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData.toString()
         })
         .then(() => {
-            // Success UI
+            // Because of 'no-cors', we assume success if the request finishes
             questionnaireContainer.innerHTML = `
                 <div class="text-center py-20">
                     <h2 class="text-3xl font-bold text-blue-900">Thank You!</h2>
@@ -919,7 +922,7 @@
             document.getElementById('progress-container').style.display = 'none';
         })
         .catch(error => {
-            alert('Error submitting form: ' + error.message);
+            alert('Network error. Please check your connection.');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Submit';
         });
