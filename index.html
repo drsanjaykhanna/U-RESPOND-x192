@@ -885,30 +885,48 @@
                 renderStep(currentStep);
             }
         });
-
-      submitBtn.addEventListener('click', () => {
+submitBtn.addEventListener('click', () => {
     if (validateStep()) {
         saveResponses();
         
-        // The URL from Step 1
+        // PASTE YOUR GOOGLE SCRIPT URL BETWEEN THE QUOTES BELOW
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzS9JbC-hyko-_oHsmOTw8foW61EK5B057qonr36sZevE4IRZrH7jCc3WGs8rKmnMJT/exec';
+
+        // Show a "Processing" message
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
 
         fetch(scriptURL, {
             method: 'POST',
-            body: JSON.stringify(responses),
+            mode: 'no-cors', // Essential for Google Script + GitHub
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(responses)
         })
-        .then(response => {
-            showMessage('Submitted successfully! Thank you.', 'success');
-            // Hide the questionnaire as you did before
-            questionnaireContainer.innerHTML = '';
+        .then(() => {
+            // Success Logic
+            alert('Submission successful! Your data has been sent to the research team.');
+            questionnaireContainer.innerHTML = `
+                <div class="text-center py-12">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 text-green-500 rounded-full mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Thank You!</h2>
+                    <p class="text-gray-600">Your responses have been recorded and emailed to the study team.</p>
+                </div>
+            `;
             document.getElementById('navigation-container').classList.add('hidden');
         })
         .catch(error => {
-            showMessage('Error submitting form. Please contact the study team.', 'error');
-            console.error('Error!', error.message);
+            console.error('Error:', error);
+            alert('There was an error submitting. Please try again or contact the study team.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit';
         });
     }
 });
+  
 
         // Initial setup
         initializeQuestionnaire();
