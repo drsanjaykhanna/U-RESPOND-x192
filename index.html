@@ -897,14 +897,13 @@ submitBtn.addEventListener('click', function() {
         submitBtn.textContent = 'Sending...';
 
         // We use 'no-cors' to ensure the browser doesn't block the request
-        fetch(scriptURL, {
+      fetch(scriptURL, {
             method: 'POST',
             mode: 'no-cors', 
-            cache: 'no-cache',
             headers: {
-                'Content-Type': 'text/plain' // Change 'application/json' to 'text/plain'
+                'Content-Type': 'text/plain' 
             },
-            body: new URLSearchParams(responses)
+            body: JSON.stringify(responses) // Ensure it is sending the 'responses' object
         })
         .then(function() {
             // Success Logic
