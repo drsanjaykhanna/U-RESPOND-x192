@@ -885,17 +885,17 @@
             }
         });
 
-     submitBtn.addEventListener('click', () => {
+    submitBtn.addEventListener('click', () => {
     if (validateStep()) {
         saveResponses();
         
-        // PASTE YOUR NEW URL FROM THE STEP ABOVE HERE
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxpAYb_wxG6c8BJjR9JO5xScLLPAQyA4vAnlfmhJzt1yZR_9Ck5xhzwhSkhlgUaUqbN/exec';
+        // *** CRITICAL: PASTE YOUR GOOGLE URL HERE ***
+        const scriptURL = 'https://script.google.com/macros/s/YOUR_ACTUAL_ID_HERE/exec';
 
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
 
-        // We use URLSearchParams to ensure Google sees individual columns
+        // Convert the responses object into the format Google expects
         const formData = new URLSearchParams();
         for (const key in responses) {
             const value = Array.isArray(responses[key]) ? responses[key].join(', ') : responses[key];
@@ -904,7 +904,7 @@
 
         fetch(scriptURL, {
             method: 'POST',
-            mode: 'no-cors', // This bypasses the 405/CORS blocks
+            mode: 'no-cors', // This bypasses the 405 error from GitHub
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -912,7 +912,7 @@
             body: formData.toString()
         })
         .then(() => {
-            // Because of 'no-cors', we assume success if the request finishes
+            // Success UI
             questionnaireContainer.innerHTML = `
                 <div class="text-center py-20">
                     <h2 class="text-3xl font-bold text-blue-900">Thank You!</h2>
@@ -922,13 +922,12 @@
             document.getElementById('progress-container').style.display = 'none';
         })
         .catch(error => {
-            alert('Network error. Please check your connection.');
+            alert('Submission error. Please check your internet connection.');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Submit';
         });
     }
 });
-
         // Initial setup
         initializeQuestionnaire();
     </script>
