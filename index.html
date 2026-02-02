@@ -9,18 +9,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+        /* Form Elements */
         .form-radio { -webkit-appearance: none; border-radius: 50%; width: 1.25rem; height: 1.25rem; border: 2px solid #d1d5db; transition: 0.2s all linear; margin-right: 0.5rem; position: relative; top: 0.2rem; }
         .form-radio:checked { border: 6px solid #2563eb; }
         .form-checkbox { -webkit-appearance: none; border-radius: 0.25rem; width: 1.25rem; height: 1.25rem; border: 2px solid #d1d5db; transition: 0.2s all linear; margin-right: 0.5rem; position: relative; top: 0.2rem; }
         .form-checkbox:checked { background-color: #2563eb; border-color: #2563eb; background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e"); }
+        .scale-radio:checked { border-color: #2563eb; background-color: #2563eb; }
         .progress-bar-fill { transition: width 0.3s ease-in-out; }
+        /* Sliders */
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]:focus { outline: none; }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 8px; cursor: pointer; background: #d1d5db; border-radius: 5px; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #2563eb; cursor: pointer; margin-top: -8px; }
+        /* DCE Tables */
         .dce-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
         .dce-table th, .dce-table td { border: 1px solid #e5e7eb; padding: 0.75rem; text-align: center; }
+        .dce-table th { background-color: #f9fafb; font-weight: 600; }
         .dce-table td.feature-label { text-align: left; font-weight: 500; background-color: #f9fafb; }
-        .dce-choice-label { display: block; margin-top: 1rem; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s; }
+        .dce-choice-label { display: block; margin-top: 1rem; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s; text-align: center; }
+        .dce-choice-label:hover { background-color: #f9fafb; }
         input[type="radio"]:checked + .dce-choice-label { border-color: #2563eb; background-color: #eff6ff; }
     </style>
 </head>
@@ -34,15 +41,13 @@
                       <circle cx="30" cy="30" r="20" stroke="#3b82f6" stroke-width="4" fill="none"/>
                       <circle cx="30" cy="30" r="12" stroke="#3b82f6" stroke-width="4" fill="none"/>
                       <circle cx="30" cy="30" r="4" fill="#3b82f6"/>
-                      <text x="70" y="30" style="font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800; fill: #1e3a8a;">U-RESPOND</text>
-                      <text x="70" y="48" style="font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; fill: #3b82f6; letter-spacing: 0.1em;">STUDY</text>
+                      <text x="70" y="30" style="font-family:'Inter',sans-serif; font-size:26px; font-weight:800; fill:#1e3a8a;">U-RESPOND</text>
+                      <text x="70" y="48" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; fill:#3b82f6; letter-spacing:0.1em;">STUDY</text>
                     </g>
                 </svg>
             </div>
 
-            <div class="text-center pb-4 mb-6">
-                <p class="text-xl text-gray-800 font-bold">Participant Questionnaire</p>
-            </div>
+            <div class="text-center pb-4 mb-6"><p class="text-xl text-gray-800 font-bold">Participant Questionnaire</p></div>
 
             <div id="progress-container" class="mb-8">
                 <div class="flex justify-between mb-1">
@@ -55,6 +60,8 @@
             </div>
 
             <div id="questionnaire-container"></div>
+            
+            <div id="message-box" class="hidden mt-6 p-4 rounded-lg"><p id="message-text"></p></div>
 
             <div id="navigation-container" class="mt-8 flex justify-between items-center">
                 <button id="back-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out">Back</button>
@@ -63,134 +70,379 @@
             </div>
 
         </div>
-        
+
         <footer class="w-full max-w-3xl mt-8 text-center mx-auto">
             <div class="bg-white p-6 rounded-2xl shadow-lg">
                 <p class="text-sm font-semibold text-gray-600 mb-4">In collaboration with:</p>
                 <div class="flex flex-col items-center space-y-6">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/National_Health_Service_%28England%29_logo.svg/1280px-National_Health_Service_%28England%29_logo.svg.png" alt="NHS Logo" class="h-10 object-contain">
                     <img src="https://patientinfolibrary.royalmarsden.nhs.uk/themes/custom/rmt/logo.svg" alt="Royal Marsden Logo" class="h-12 object-contain">
+                    <img src="https://www.southampton.ac.uk/img/ctu/SCTU%20logos/SCTU%20Logo%20(mediabin%20resized).jpg?csf=1&web=1&e=wbeGJs" alt="Southampton CTU" class="h-16 object-contain">
                 </div>
             </div>
         </footer>
     </div>
 
     <script>
+        // --- YOUR FULL QUESTIONNAIRE DATA ---
         const questionnaireData = [
             {
                 domain: "Welcome & Consent",
                 questions: [
-                    { id: "welcome", text: "Welcome to the U-RESPOND study questionnaire. This will take approximately 20 minutes.", type: "info" },
+                    { id: "welcome", text: "Welcome to the U-RESPOND study questionnaire. Thank you for taking the time to contribute to this important research. This questionnaire will take approximately 20 minutes to complete.", type: "info" },
                     { id: "participant_id", text: "Please enter your Unique Participant ID Number", type: "text", placeholder: "e.g., URS-12345" },
-                    { id: "consent_confirm", text: "I confirm that I consent to participate in this study.", type: "checkbox" }
+                    { id: "consent_confirm", text: "I confirm that I have read the participant information sheet and I voluntarily consent to participate in this study. I understand my data will be kept confidential and used for research purposes only.", type: "checkbox" }
                 ]
             },
             {
                 domain: "About You",
                 questions: [
+                    { id: "demographics_explainer", text: "These questions help us understand if we are hearing from a diverse range of people from all backgrounds. Your answers are kept completely confidential.", type: "info" },
                     { id: "age", text: "What is your age?", type: "number", placeholder: "e.g., 65" },
                     { id: "sex", text: "What is your sex assigned at birth?", type: "categorical", options: ["Male", "Female"] },
-                    { id: "ethnic_group", text: "What is your ethnic group?", type: "categorical", options: ["White", "Mixed", "Asian", "Black", "Other"] },
-                    { id: "education_level", text: "Highest education level?", type: "categorical", options: ["No formal", "GCSE", "A-Level", "Undergraduate", "Postgraduate"] },
-                    { id: "postcode", text: "First part of your postcode?", type: "text", placeholder: "e.g., SW3" },
-                    { id: "general_health", text: "How is your general health?", type: "scale", options: ["Very good", "Good", "Fair", "Poor", "Very poor"] }
+                    { id: "ethnic_group", text: "What is your ethnic group?", type: "categorical", options: ["White", "Mixed/Multiple ethnic groups", "Asian/Asian British", "Black/African/Caribbean/Black British", "Other ethnic group", "Prefer not to say"] },
+                    { id: "ethnic_group_other", text: "Please specify your ethnic group", type: "text", placeholder: "Please specify", condition: { id: "ethnic_group", value: "Other ethnic group" }, optional: true },
+                    { id: "education_level", text: "What is the highest level of education you have completed?", type: "categorical", options: ["No formal qualifications", "GCSEs/O-Levels or equivalent", "A-Levels or equivalent", "Undergraduate degree", "Postgraduate degree", "Prefer not to say"] },
+                    { id: "employment_status", text: "Which of the following best describes your current employment status?", type: "categorical", options: ["Employed", "Self-employed", "Unemployed", "Retired", "Student", "Other"] },
+                    { id: "employment_details", text: "Please tell us more about your employment (select all that apply):", type: "multi_checkbox", options: ["I work full-time", "I work part-time", "I have more than one job", "I am on a zero-hours contract"], condition: { id: "employment_status", value: "Employed" }, optional: true },
+                    { id: "postcode", text: "What is the first part of your postcode?", type: "text", placeholder: "e.g., SW3" },
+                    { id: "primary_language", text: "What is your primary language spoken at home?", type: "text", placeholder: "e.g., English" },
+                    { id: "general_health", text: "How would you describe your general health?", type: "scale", options: ["Very good", "Good", "Fair", "Poor", "Very poor"] },
                 ]
             },
             {
                 domain: "Your Health Background",
                 questions: [
                     { id: "smoked_ever", text: "Have you ever smoked tobacco?", type: "Y/N" },
-                    { id: "smoke_currently", text: "Do you currently smoke?", type: "Y/N", condition: { id: "smoked_ever", value: "Yes" } },
-                    { id: "lung_invite", text: "Received an invitation for an NHS Lung Health Check?", type: "Y/N/Unsure" }
+                    { id: "smoke_currently", text: "Do you currently smoke cigarettes/tobacco?", type: "Y/N", condition: { id: "smoked_ever", value: "Yes" } },
+                    { id: "years_smoked_ex", text: "How many years did you smoke for?", type: "number", placeholder: "e.g., 20", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'No'}] } },
+                    { id: "cigs_per_day_ex", text: "On average, how many cigarettes did you smoke per day?", type: "text", placeholder: "e.g., 15 cigarettes", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'No'}] } },
+                    { id: "years_quit", text: "How many years has it been since you last smoked regularly?", type: "number", placeholder: "e.g., 10", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'No'}] } },
+                    { id: "years_smoked_current", text: "How many years have you smoked for?", type: "number", placeholder: "e.g., 30", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'Yes'}] } },
+                    { id: "cigs_per_day_current", text: "On average, how many cigarettes/tobacco do you smoke per day?", type: "text", placeholder: "e.g., 20 cigarettes", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'Yes'}] } },
+                    { id: "other_screening", text: "Have you ever participated in cancer screening before?", type: "Y/N" },
+                    { id: "lung_invite", text: "Have you ever received an invitation for an NHS Lung Health Check?", type: "Y/N/Unsure" },
+                    { id: "lung_attended_completed", text: "Did you attend and complete the screening?", type: "Y/N", condition: { id: "lung_invite", value: "Yes" } },
+                    { id: "lung_check_date", text: "Approximately when did you have the lung health check?", type: "text", placeholder: "e.g., 2023", condition: { id: "lung_attended_completed", value: "Yes" } },
+                    { id: "diagnosed_lc", text: "Have you ever been diagnosed with lung cancer?", type: "Y/N" },
+                    { id: "diagnosed_lc_year", text: "Approximately which year were you diagnosed?", type: "text", placeholder: "e.g., 2022", condition: { id: "diagnosed_lc", value: "Yes" } },
+                    { id: "family_diagnosed_lc", text: "Has a close family member ever been diagnosed with lung cancer?", type: "Y/N" },
+                    { id: "family_diagnosed_lc_year", text: "Approximately which year were they diagnosed?", type: "text", placeholder: "e.g., 2020", condition: { id: "family_diagnosed_lc", value: "Yes" } },
+                    { id: "investigations_negative", text: "Have you had any investigations for suspected lung cancer that turned out negative?", type: "Y/N" },
+                    { id: "investigations_negative_date", text: "Approximately when did this happen?", type: "text", placeholder: "e.g., last year", condition: { id: "investigations_negative", value: "Yes" } },
                 ]
             },
             {
-                domain: "Discrete Choice Experiment",
+                domain: "What You Know About Lung Screening",
                 questions: [
-                    { id: "dce_explainer", text: "Imagine choosing between different types of lung health checks...", type: "info" },
-                    { id: "dce_task_1", type: "dce_task", text: "Choice 1 of 6", options: { optionA: { "Test Type": "CT Scan", "Detection Rate": "95/100", "False Alarm": "10/100", "Cost": "£0" }, optionB: { "Test Type": "Blood Test", "Detection Rate": "90/100", "False Alarm": "1/100", "Cost": "£25" } } }
+                    { id: "awareness_lcs", text: "How would you describe your awareness of national lung cancer screening?", type: "scale", options: ["Not at all aware", "Slightly aware", "Moderately aware", "Very aware", "Extremely aware"] },
+                    { id: "lcs_sources", text: "From what sources have you heard about lung cancer screening? (Select all)", type: "multi_checkbox", options: ["GP or nurse", "NHS letter or leaflet", "TV or radio", "Newspaper or magazine", "Online", "Family or friends", "Other"], optional: true },
+                    { id: "lcs_purpose", text: "What do you think is the main purpose of a lung health check?", type: "categorical", options: ["To find lung cancer early", "To prevent lung cancer", "To check for other lung problems", "I'm not sure"] },
+                    { id: "lcs_scantype", text: "What type of scan is typically used for lung cancer screening?", type: "categorical", options: ["A CT scan", "An X-ray", "An MRI scan", "A blood test", "I'm not sure"] },
+                    { id: "lcs_importance", text: "How important do you think screening for lung cancer is?", type: "slider", min: 0, max: 100, minLabel: "Not important", maxLabel: "Extremely important" },
+                    { id: "knowledge_statement_1", text: "Lung cancer screening helps detect cancer early when it's easier to treat.", type: "T/F/DK" },
+                    { id: "knowledge_statement_2", text: "Lung cancer screening reduces the risk of dying from lung cancer.", type: "T/F/DK" },
+                    { id: "knowledge_statement_3", text: "Lung cancer screening is only recommended for people who currently smoke.", type: "T/F/DK" },
+                    { id: "knowledge_statement_4", text: "Lung cancer screening always finds cancer if it's present.", type: "T/F/DK" },
+                    { id: "knowledge_statement_5", text: "Lung cancer screening often results in further, more invasive tests.", type: "T/F/DK" }
+                ]
+            },
+            {
+                domain: "Possible Upsides of Screening",
+                questions: [
+                    { id: "benefit_for_whom", text: "In your opinion, what kind of person would benefit most from having a lung health check?", type: "textarea", placeholder: "e.g., people with a long smoking history..." },
+                    { id: "benefit_main", text: "What is the main benefit of this test?", type: "textarea", placeholder: "Type your answer here..." },
+                    { id: "motivation_intro", text: "For the following statements, please rate how much you agree or disagree.", type: "info" },
+                    { id: "motivation_detect_early", text: "Knowing that lung cancer screening can detect cancer at an early stage is a major motivation for me.", type: "agreement_scale" },
+                    { id: "motivation_increase_survival", text: "I would participate in screening to increase my chances of surviving lung cancer.", type: "agreement_scale" },
+                    { id: "motivation_peace_of_mind", text: "Lung cancer screening offers me a sense of peace of mind about my health.", type: "agreement_scale" },
+                    { id: "motivation_responsibility", text: "I believe that people at risk for lung cancer have a responsibility to get screened.", type: "agreement_scale" },
+                    { id: "motivation_doctor_rec", text: "My doctor's strong recommendation would be a primary reason for me to get screened.", type: "agreement_scale" },
+                    { id: "motivation_family_worry", text: "I would participate in screening to reduce my family's worry about my health.", type: "agreement_scale" },
+                    { id: "motivation_ranking", text: "Which of the following is the MOST important reason for you to consider screening?", type: "categorical", options: ["Detecting cancer early", "Increasing my chances of survival", "Giving me peace of mind", "It is my responsibility", "My doctor's recommendation", "Reducing my family's worry"] }
+                ]
+            },
+            {
+                domain: "Your Views on Lung Screening",
+                questions: [
+                    { id: "perceived_risk_population", text: "Out of 100 people, how many do you think will develop lung cancer in their lifetime?", type: "slider", min: 0, max: 100, minLabel: "0", maxLabel: "100" },
+                    { id: "perceived_risk_personal", text: "What is your personal chance of developing lung cancer in your lifetime?", type: "slider", min: 0, max: 100, minLabel: "No chance", maxLabel: "Certain" },
+                    { id: "seriousness_diagnosis", text: "How serious do you believe a diagnosis of lung cancer is?", type: "scale", options: ["Not at all serious", "Slightly serious", "Moderately serious", "Very serious", "Extremely serious"] },
+                    { id: "barrier_main_reason", text: "What is the main reason to not have a lung cancer screen?", type: "textarea" },
+                    { id: "barrier_intro", text: "To what extent would the following make you less likely to have a lung cancer screen:", type: "info" },
+                    { id: "concern_radiation", text: "I am worried about the radiation exposure from a CT scan", type: "agreement_scale" },
+                    { id: "concern_false_positive", text: "I would be anxious about receiving a 'false alarm'.", type: "agreement_scale" },
+                    { id: "concern_finding_cancer", text: "The thought of finding out I have cancer makes me anxious", type: "agreement_scale" },
+                    { id: "concern_inconvenience", text: "The screening process seems inconvenient", type: "agreement_scale" },
+                    { id: "concern_stigma", text: "I feel there is a stigma associated with smoking", type: "agreement_scale" },
+                    { id: "concern_follow_up", text: "I am worried about follow-up procedures", type: "agreement_scale" },
+                    { id: "concern_no_difference", text: "I don't believe screening would make a difference for me personally", type: "agreement_scale" },
+                    { id: "concern_uncomfortable", text: "I would feel uncomfortable undergoing a lung cancer screening scan", type: "agreement_scale" },
+                    { id: "concern_lack_of_info", text: "Lack of information about lung cancer screening is a barrier for me", type: "agreement_scale" },
+                    { id: "barrier_ranking", text: "Which of the following is the BIGGEST concern?", type: "categorical", options: ["Radiation", "False positive", "Finding cancer", "Inconvenience", "Stigma", "Follow-up", "No difference", "Discomfort", "Lack of info"] },
+                    { id: "psych_hopeful", text: "How hopeful would you feel about the potential benefits?", type: "scale", options: ["Not at all hopeful", "Slightly hopeful", "Moderately hopeful", "Very hopeful", "Extremely hopeful"] },
+                    { id: "psych_guilt", text: "How much guilt do you feel about your smoking history?", type: "scale", options: ["No guilt", "A little", "Moderate", "A lot", "A great deal"], condition: { id: "smoked_ever", value: "Yes" } },
+                    { id: "psych_personal_risk", text: "I feel that my personal risk of developing lung cancer is high.", type: "agreement_scale" },
+                    { id: "psych_consequences", text: "The consequences of lung cancer are very severe.", type: "agreement_scale" },
+                    { id: "psych_confident_attend", text: "I feel confident that I can organise and attend screening appointments.", type: "agreement_scale" },
+                    { id: "psych_social_norm", text: "Most people important to me would want me to get screening.", type: "agreement_scale" },
+                    { id: "psych_useful", text: "I believe participating in screening would be useful for me.", type: "agreement_scale" },
+                    { id: "psych_pleasant", text: "I believe participating in screening would be a pleasant experience.", type: "agreement_scale" },
+                    { id: "psych_control", text: "I have complete control over whether I participate.", type: "agreement_scale" },
+                    { id: "psych_fate", text: "My health is mostly determined by fate or luck.", type: "agreement_scale" },
+                    { id: "psych_good_at_planning", text: "I am generally good at planning and remembering appointments.", type: "agreement_scale" },
+                    { id: "psych_judged", text: "I would feel judged by others due to my smoking history.", type: "agreement_scale" },
+                    { id: "psych_blame", text: "Society tends to blame people who get lung cancer.", type: "agreement_scale" }
+                ]
+            },
+            {
+                domain: "Different Types of Screening Tests",
+                questions: [
+                    { id: "modality_intro_blood_test", text: "Researchers are developing new types of screening tests, like blood tests. While improving, they are not yet perfect.", type: "info" },
+                    { id: "modality_consider_blood_test", text: "Would you consider having this new blood test?", type: "Y/N" },
+                    { id: "modality_blood_test_routine", text: "If the blood test was added routinely, would this make you...", type: "scale", options: ["Much less likely", "Less likely", "Equally likely", "More likely", "Much more likely"] },
+                    { id: "modality_blood_test_self_collect", text: "If the blood test was self-collected at home, would this make you...", type: "scale", options: ["Much less likely", "Less likely", "Equally likely", "More likely", "Much more likely"] },
+                    { id: "modality_blood_test_multi_cancer", text: "If the blood test could also detect other types of cancer, would this make you...", type: "scale", options: ["Much less likely", "Less likely", "Equally likely", "More likely", "Much more likely"] },
+                    { id: "modality_blood_test_in_addition", text: "Would you consider having this blood test in addition to a scan?", type: "scale", options: ["Very unlikely", "Unlikely", "Neutral", "Likely", "Very likely"] },
+                    { id: "modality_blood_test_instead", text: "Would you consider having this blood test instead of a scan?", type: "scale", options: ["Very unlikely", "Unlikely", "Neutral", "Likely", "Very likely"] },
+                    { id: "modality_preference_ct_blood_same", text: "Overall, would you be more likely to have a CT scan or a blood test?", type: "categorical", options: ["More likely to have a CT scan", "More likely to have a blood test", "Equally likely to have either"] },
+                    { id: "modality_agreement_intro", text: "Thinking about the new blood test, to what extent do you agree or disagree:", type: "info" },
+                    { id: "modality_agree_convenient", text: "A blood test would be more convenient than a CT scan.", type: "agreement_scale" },
+                    { id: "modality_agree_less_anxious", text: "I would be less anxious about a blood test than a CT scan.", type: "agreement_scale" },
+                    { id: "modality_agree_more_likely", text: "I would be more likely to participate in screening if it involved a blood test.", type: "agreement_scale" },
+                    { id: "modality_agree_less_invasive", text: "A blood test would feel less invasive than a CT scan.", type: "agreement_scale" },
+                    { id: "modality_agree_less_radiation", text: "I would be less concerned about radiation exposure with a blood test.", type: "agreement_scale" },
+                    { id: "modality_agree_accuracy_worry", text: "I would worry if a blood test was not as accurate as a CT scan.", type: "agreement_scale" },
+                    { id: "modality_concern_false_positives", text: "To what extent are you concerned about false positives from a blood test?", type: "scale", options: ["Not at all concerned", "Slightly concerned", "Moderately concerned", "Very concerned", "Extremely concerned"] },
+                    { id: "modality_concern_false_negatives", text: "To what extent are you concerned about false negatives from a blood test?", type: "scale", options: ["Not at all concerned", "Slightly concerned", "Moderately concerned", "Very concerned", "Extremely concerned"] },
+                    { id: "modality_w2p", text: "How much would you pay to avoid a 10% risk of late-stage diagnosis?", type: "categorical", options: ["£0", "£1 - £20", "£21 - £50", "£51 - £100", "More than £100", "I would not pay"] }
+                ]
+            },
+            {
+                domain: "Discrete Choice Experiment (Part 1)",
+                questions: [
+                    { id: "dce_master_explainer", type: "info", text: "Imagine you are choosing between different types of lung health checks. No test is perfect, so you will have to trade-off between features." },
+                    { id: "dce_task_1", type: "dce_task", text: "Choice 1 of 6", options: { optionA: { "Test Type": "CT Scan", "Detection Rate": "95/100", "False Alarm Rate": "10/100", "Follow-up": "A CT Scan", "Cost": "£0" }, optionB: { "Test Type": "Blood Test", "Detection Rate": "90/100", "False Alarm Rate": "1/100", "Follow-up": "A CT Scan", "Cost": "£25" }}},
+                    { id: "dce_task_2", type: "dce_task", text: "Choice 2 of 6", options: { optionA: { "Test Type": "Home Test", "Detection Rate": "85/100", "False Alarm Rate": "1/100", "Follow-up": "Repeat test", "Cost": "£0" }, optionB: { "Test Type": "CT Scan", "Detection Rate": "90/100", "False Alarm Rate": "5/100", "Follow-up": "Referral", "Cost": "£75" }}},
+                    { id: "dce_task_3", type: "dce_task", text: "Choice 3 of 6", options: { optionA: { "Test Type": "Blood Test", "Detection Rate": "95/100", "False Alarm Rate": "5/100", "Follow-up": "Repeat test", "Cost": "£25" }, optionB: { "Test Type": "Home Test", "Detection Rate": "90/100", "False Alarm Rate": "10/100", "Follow-up": "A CT Scan", "Cost": "£0" }}},
+                    { id: "dce_task_4", type: "dce_task", text: "Choice 4 of 6", options: { optionA: { "Test Type": "CT Scan", "Detection Rate": "85/100", "False Alarm Rate": "1/100", "Follow-up": "Referral", "Cost": "£25" }, optionB: { "Test Type": "Home Test", "Detection Rate": "95/100", "False Alarm Rate": "5/100", "Follow-up": "Repeat test", "Cost": "£75" }}},
+                    { id: "dce_task_5", type: "dce_task", text: "Choice 5 of 6", options: { optionA: { "Test Type": "Blood Test", "Detection Rate": "90/100", "False Alarm Rate": "10/100", "Follow-up": "Referral", "Cost": "£75" }, optionB: { "Test Type": "CT Scan", "Detection Rate": "95/100", "False Alarm Rate": "1/100", "Follow-up": "A CT Scan", "Cost": "£25" }}},
+                    { id: "dce_task_6", type: "dce_task", text: "Choice 6 of 6", options: { optionA: { "Test Type": "Home Test", "Detection Rate": "90/100", "False Alarm Rate": "5/100", "Follow-up": "A CT Scan", "Cost": "£25" }, optionB: { "Test Type": "Blood Test", "Detection Rate": "85/100", "False Alarm Rate": "1/100", "Follow-up": "Referral", "Cost": "£0" }}}
+                ]
+            },
+            {
+                domain: "Discrete Choice Experiment (Part 2)",
+                questions: [
+                    { id: "dce_task_7", type: "dce_task", text: "Choice 1 of 6", options: { optionA: { "Test Type": "Blood Test", "Detection Rate": "85/100", "False Alarm Rate": "10/100", "Follow-up": "Repeat test", "Cost": "£75" }, optionB: { "Test Type": "CT Scan", "Detection Rate": "90/100", "False Alarm Rate": "1/100", "Follow-up": "Referral", "Cost": "£0" }}},
+                    { id: "dce_task_8", type: "dce_task", text: "Choice 2 of 6", options: { optionA: { "Test Type": "Home Test", "Detection Rate": "95/100", "False Alarm Rate": "1/100", "Follow-up": "A CT Scan", "Cost": "£25" }, optionB: { "Test Type": "Blood Test", "Detection Rate": "90/100", "False Alarm Rate": "5/100", "Follow-up": "Repeat test", "Cost": "£75" }}},
+                    { id: "dce_task_9", type: "dce_task", text: "Choice 3 of 6", options: { optionA: { "Test Type": "CT Scan", "Detection Rate": "90/100", "False Alarm Rate": "10/100", "Follow-up": "Repeat test", "Cost": "£0" }, optionB: { "Test Type": "Home Test", "Detection Rate": "85/100", "False Alarm Rate": "5/100", "Follow-up": "Referral", "Cost": "£25" }}},
+                    { id: "dce_task_10", type: "dce_task", text: "Choice 4 of 6", options: { optionA: { "Test Type": "Blood Test", "Detection Rate": "95/100", "False Alarm Rate": "1/100", "Follow-up": "Referral", "Cost": "£0" }, optionB: { "Test Type": "CT Scan", "Detection Rate": "85/100", "False Alarm Rate": "10/100", "Follow-up": "Repeat test", "Cost": "£75" }}},
+                    { id: "dce_task_11", type: "dce_task", text: "Choice 5 of 6", options: { optionA: { "Test Type": "Home Test", "Detection Rate": "90/100", "False Alarm Rate": "1/100", "Follow-up": "Repeat test", "Cost": "£75" }, optionB: { "Test Type": "Blood Test", "Detection Rate": "95/100", "False Alarm Rate": "10/100", "Follow-up": "A CT Scan", "Cost": "£25" }}},
+                    { id: "dce_task_12", type: "dce_task", text: "Choice 6 of 6", options: { optionA: { "Test Type": "CT Scan", "Detection Rate": "95/100", "False Alarm Rate": "5/100", "Follow-up": "Referral", "Cost": "£25" }, optionB: { "Test Type": "Home Test", "Detection Rate": "85/100", "False Alarm Rate": "1/100", "Follow-up": "A CT Scan", "Cost": "£0" }}}
+                ]
+            },
+            {
+                domain: "Optional Section",
+                questions: [
+                    { id: "comm_opt_in", text: "The next two sections about messaging are optional. Would you like to answer them?", type: "Y/N" }
+                ]
+            },
+            {
+                domain: "Communications (Poster)",
+                questions: [
+                    { id: "comm_intro_poster", text: "Select the top 3 messages that would motivate you.", type: "communication_choice_poster", condition: { id: "comm_opt_in", value: "Yes" }, options: ["Missing this free check could cost you.", "Don't wait for regret.", "Join your local community.", "Your GP recommends this.", "Book today to secure your spot.", "Quick, easy, and free.", "Reserved just for you.", "Do it for your family.", "People who care about health do this."] }
+                ]
+            },
+            {
+                domain: "Communications (Letter)",
+                questions: [
+                    { id: "comm_intro_letter", text: "Select the top 3 letter sentences.", type: "communication_choice_letter", condition: { id: "comm_opt_in", value: "Yes" }, options: ["Your GP, Dr. Smith, recommends this.", "Based on your health profile.", "If a scan is needed, it's at Royal Marsden.", "You meet key criteria.", "A spot has been reserved.", "6 out of 10 people attended.", "Support to stop smoking.", "Don't delay."] }
+                ]
+            },
+            {
+                domain: "Technology & AI",
+                questions: [
+                    { id: "info_confidence", text: "How confident are you accessing information?", type: "scale", options: ["Not confident", "Slightly", "Moderately", "Very", "Extremely"] },
+                    { id: "ai_familiarity", text: "Familiarity with AI/chatbots?", type: "scale", options: ["Not familiar", "Slightly", "Moderately", "Very", "Extremely"] },
+                    { id: "ai_interest", text: "Interested in helping design an AI tool?", type: "Y/N" }
                 ]
             }
-            // (Note: To save space in this chat, I have truncated the questions here, but the code logic below is your FULL UNABRIDGED VERSION)
         ];
 
+        // --- APPLICATION LOGIC ---
         let currentStep = 0;
         const responses = {};
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxpAYb_wxG6c8BJjR9JO5xScLLPAQyA4vAnlfmhJzt1yZR_9Ck5xhzwhSkhlgUaUqbN/exec';
+        const scriptURL = 'PASTE_YOUR_EXEC_URL_HERE'; // *** PASTE URL HERE ***
 
         const questionnaireContainer = document.getElementById('questionnaire-container');
         const backBtn = document.getElementById('back-btn');
         const nextBtn = document.getElementById('next-btn');
         const submitBtn = document.getElementById('submit-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
 
-        function createQuestionHTML(question) {
+        function createQuestionHTML(q) {
             let inputHTML = '';
-            if (question.type === 'info') return `<div class="p-4 my-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg"><p class="text-gray-700 leading-relaxed">${question.text}</p></div>`;
-            
-            switch (question.type) {
+            let optionWrapperClass = q.type === 'info' ? '' : 'flex flex-wrap gap-x-4 gap-y-2 mt-2';
+
+            switch (q.type) {
+                case 'info':
+                    return `<div class="p-4 my-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg"><p class="text-gray-700 leading-relaxed">${q.text}</p></div>`;
                 case 'checkbox':
-                    inputHTML = `<label class="flex items-start mt-4 p-3 border rounded-lg"><input type="checkbox" name="${question.id}" class="form-checkbox mt-1"><span class="ml-3">${question.text}</span></label>`;
+                    return `<label class="flex items-start mt-4 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"><input type="checkbox" name="${q.id}" class="form-checkbox mt-1"><span class="ml-3 text-gray-700">${q.text}</span></label>`;
+                case 'multi_checkbox':
+                    inputHTML = `<div class="${optionWrapperClass}">` + q.options.map(opt => `<label class="flex items-center mt-2"><input type="checkbox" class="form-checkbox" name="${q.id}" value="${opt}"><span class="ml-2 text-gray-700">${opt}</span></label>`).join('') + `</div>`;
+                    break;
+                case 'textarea':
+                    inputHTML = `<textarea name="${q.id}" rows="3" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" placeholder="${q.placeholder || ''}"></textarea>`;
                     break;
                 case 'text': case 'number':
-                    inputHTML = `<input type="${question.type}" name="${question.id}" placeholder="${question.placeholder || ''}" class="mt-1 block w-full px-3 py-2 border rounded-md">`;
+                    inputHTML = `<input type="${q.type}" name="${q.id}" placeholder="${q.placeholder || ''}" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm">`;
                     break;
-                case 'categorical': case 'scale': case 'Y/N':
-                    const opts = question.options || (question.type === 'Y/N' ? ['Yes', 'No'] : []);
-                    inputHTML = opts.map(opt => `<label class="block mt-2"><input type="radio" name="${question.id}" value="${opt}" class="form-radio"><span class="ml-2">${opt}</span></label>`).join('');
+                case 'categorical': case 'scale': case 'Y/N': case 'Y/N/Unsure': case 'T/F/DK':
+                    const opts = q.options || (q.type === 'Y/N' ? ['Yes', 'No'] : (q.type === 'Y/N/Unsure' ? ['Yes', 'No', 'Unsure'] : ['True', 'False', "Don't know"]));
+                    inputHTML = `<div class="${optionWrapperClass}">` + opts.map(opt => `<label class="flex items-center mt-2"><input type="radio" class="form-radio" name="${q.id}" value="${opt}"><span class="ml-2 text-gray-700">${opt}</span></label>`).join('') + `</div>`;
+                    break;
+                case 'agreement_scale':
+                    inputHTML = `<div class="flex flex-col sm:flex-row justify-between mt-2">` + ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"].map(opt => `<label class="flex flex-col items-center mt-2 text-center text-sm text-gray-600 w-full sm:w-auto"><input type="radio" class="form-radio scale-radio" name="${q.id}" value="${opt}"><span class="mt-1">${opt}</span></label>`).join('') + `</div>`;
+                    break;
+                case 'slider':
+                    inputHTML = `<div class="mt-2"><input type="range" id="${q.id}" name="${q.id}" min="${q.min}" max="${q.max}" class="w-full"><div class="flex justify-between text-sm text-gray-600 mt-1"><span>${q.minLabel}</span><span>${q.maxLabel}</span></div></div>`;
                     break;
                 case 'dce_task':
-                    const rows = Object.keys(question.options.optionA).map(key => `<tr><td class="feature-label">${key}</td><td>${question.options.optionA[key]}</td><td>${question.options.optionB[key]}</td></tr>`).join('');
+                    const headers = Object.keys(q.options.optionA);
+                    const rows = headers.map(h => {
+                        let note = '';
+                        if(h.includes("Rate")) note = h.includes("False") ? '<span class="text-red-600 text-xs ml-1">(lower=better)</span>' : '<span class="text-green-600 text-xs ml-1">(higher=better)</span>';
+                        return `<tr><td class="feature-label">${h}${note}</td><td>${q.options.optionA[h]}</td><td>${q.options.optionB[h]}</td></tr>`;
+                    }).join('');
                     inputHTML = `<table class="dce-table"><thead><tr><th>Feature</th><th>Option A</th><th>Option B</th></tr></thead><tbody>${rows}</tbody></table>
-                    <div class="mt-6 flex gap-4">
-                        <label class="flex-1"><input type="radio" name="${question.id}" value="A" class="sr-only"><div class="dce-choice-label border-2 p-2 rounded cursor-pointer">Option A</div></label>
-                        <label class="flex-1"><input type="radio" name="${question.id}" value="B" class="sr-only"><div class="dce-choice-label border-2 p-2 rounded cursor-pointer">Option B</div></label>
-                    </div>`;
+                    <div class="mt-6"><p class="text-center font-medium text-gray-700">Which option would you choose?</p><div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><input type="radio" id="${q.id}_A" name="${q.id}" value="A" class="sr-only"><label for="${q.id}_A" class="dce-choice-label">I would choose Option A</label></div>
+                        <div><input type="radio" id="${q.id}_B" name="${q.id}" value="B" class="sr-only"><label for="${q.id}_B" class="dce-choice-label">I would choose Option B</label></div>
+                    </div></div>`;
                     break;
+                case 'communication_choice_poster': case 'communication_choice_letter':
+                     inputHTML = `<div class="border rounded-lg p-4 bg-gray-50">` + q.options.map(opt => `<label class="flex items-start mt-2 p-2 rounded hover:bg-gray-200"><input type="checkbox" class="form-checkbox mt-1" name="${q.id}" value="${opt}"><span class="ml-3 text-gray-700">${opt}</span></label>`).join('') + `</div>`;
+                     break;
             }
-            return `<div id="wrapper-${question.id}" class="my-6"><label class="block text-md font-bold text-gray-800">${question.type === 'checkbox' ? '' : question.text}</label>${inputHTML}</div>`;
+            return `<div id="wrapper-${q.id}" class="my-6"><label class="block text-md font-medium text-gray-800">${q.text}</label>${inputHTML}</div>`;
         }
 
-        function renderStep(stepIndex) {
-            const stepData = questionnaireData[stepIndex];
-            questionnaireContainer.innerHTML = `<h2 class="text-2xl font-semibold text-gray-700 mb-4">${stepData.domain}</h2>` + stepData.questions.map(createQuestionHTML).join('');
+        function checkCondition(cond) {
+            if (!cond) return true;
+            if (cond.logic === 'AND') return cond.rules.every(r => responses[r.id] === r.value);
+            return responses[cond.id] === cond.value;
+        }
+
+        function renderStep(index) {
+            const step = questionnaireData[index];
+            questionnaireContainer.innerHTML = index > 0 ? `<h2 class="text-2xl font-semibold text-gray-700 mb-4">${step.domain}</h2>` : '';
+            questionnaireContainer.innerHTML += step.questions.map(createQuestionHTML).join('');
             
-            backBtn.classList.toggle('hidden', stepIndex === 0);
-            nextBtn.classList.toggle('hidden', stepIndex === questionnaireData.length - 1);
-            submitBtn.classList.toggle('hidden', stepIndex !== questionnaireData.length - 1);
+            // Apply conditions
+            step.questions.forEach(q => {
+                if (q.condition) {
+                    const wrap = document.getElementById(`wrapper-${q.id}`);
+                    if (wrap && !checkCondition(q.condition)) wrap.classList.add('hidden');
+                }
+            });
             
-            document.getElementById('progress-container').style.display = stepIndex === 0 ? 'none' : 'block';
-            document.getElementById('progress-bar').style.width = (stepIndex / (questionnaireData.length - 1) * 100) + '%';
+            // Wire up sliders
+            document.querySelectorAll('input[type="range"]').forEach(s => {
+               s.addEventListener('input', (e) => { /* Update display logic if needed */ }); 
+            });
+
+            // Update Nav
+            backBtn.classList.toggle('hidden', index === 0);
+            
+            // Find next valid step
+            let nextVisible = -1;
+            for(let i=index+1; i<questionnaireData.length; i++){
+                const firstQ = questionnaireData[i].questions[0];
+                if(!firstQ.condition || checkCondition(firstQ.condition)) { nextVisible = i; break; }
+            }
+            const isLast = nextVisible === -1;
+            nextBtn.classList.toggle('hidden', isLast);
+            submitBtn.classList.toggle('hidden', !isLast);
+
+            // Update Progress
+            document.getElementById('progress-container').style.display = index === 0 ? 'none' : 'block';
+            document.getElementById('progress-bar').style.width = `${(index / (questionnaireData.length - 1)) * 100}%`;
             window.scrollTo(0,0);
         }
 
         function saveResponses() {
-            questionnaireContainer.querySelectorAll('input').forEach(i => {
-                if (i.type === 'checkbox') responses[i.name] = i.checked;
-                else if (i.type === 'radio') { if (i.checked) responses[i.name] = i.value; }
-                else responses[i.name] = i.value;
+            questionnaireContainer.querySelectorAll('input, textarea').forEach(i => {
+                const wrapper = i.closest('[id^="wrapper-"]');
+                if (wrapper && !wrapper.classList.contains('hidden')) {
+                    if (i.type === 'checkbox') {
+                         if (!responses[i.name]) responses[i.name] = [];
+                         if (i.checked && !responses[i.name].includes(i.value) && i.value !== 'on') responses[i.name].push(i.value);
+                         else if (i.value === 'on') responses[i.name] = i.checked ? 'Yes' : 'No';
+                    } else if (i.type === 'radio') {
+                        if (i.checked) responses[i.name] = i.value;
+                    } else {
+                        responses[i.name] = i.value;
+                    }
+                }
             });
         }
 
-        nextBtn.addEventListener('click', () => { saveResponses(); currentStep++; renderStep(currentStep); });
-        backBtn.addEventListener('click', () => { saveResponses(); currentStep--; renderStep(currentStep); });
+        // Event Listeners
+        questionnaireContainer.addEventListener('change', () => {
+             saveResponses();
+             const step = questionnaireData[currentStep];
+             step.questions.forEach(q => {
+                 if(q.condition) {
+                     const wrap = document.getElementById(`wrapper-${q.id}`);
+                     if(wrap) wrap.classList.toggle('hidden', !checkCondition(q.condition));
+                 }
+             });
+        });
 
-        submitBtn.addEventListener('click', function() {
+        nextBtn.addEventListener('click', () => {
+            saveResponses();
+            let nextStep = currentStep + 1;
+            while(nextStep < questionnaireData.length) {
+                const firstQ = questionnaireData[nextStep].questions[0];
+                if (!firstQ.condition || checkCondition(firstQ.condition)) break;
+                nextStep++;
+            }
+            if(nextStep < questionnaireData.length) { currentStep = nextStep; renderStep(currentStep); }
+        });
+
+        backBtn.addEventListener('click', () => {
+            saveResponses();
+            let prevStep = currentStep - 1;
+            while(prevStep > 0) {
+                const firstQ = questionnaireData[prevStep].questions[0];
+                if (!firstQ.condition || checkCondition(firstQ.condition)) break;
+                prevStep--;
+            }
+            if(prevStep >= 0) { currentStep = prevStep; renderStep(currentStep); }
+        });
+
+        submitBtn.addEventListener('click', () => {
             saveResponses();
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
-            const body = new URLSearchParams(responses);
 
-            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: body })
+            const formData = new URLSearchParams();
+            for (const key in responses) {
+                const val = Array.isArray(responses[key]) ? responses[key].join(', ') : responses[key];
+                formData.append(key, val);
+            }
+
+            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: formData })
             .then(() => {
-                alert("Success! Your data has been sent.");
-                location.reload();
+                questionnaireContainer.innerHTML = '<div class="text-center py-20"><h2 class="text-2xl font-bold text-blue-900">Thank You!</h2><p class="mt-4">Your responses have been recorded.</p></div>';
+                document.getElementById('navigation-container').classList.add('hidden');
             })
-            .catch(err => {
-                alert("Error: " + err.message);
-                submitBtn.disabled = false;
-            });
+            .catch(err => { alert('Error: ' + err); submitBtn.disabled = false; });
         });
 
+        // Start
         renderStep(0);
     </script>
 </body>
