@@ -888,46 +888,36 @@
 
 submitBtn.addEventListener('click', function() {
     if (validateStep()) {
+        // 1. Force a final save of everything on the screen
         saveResponses();
         
-        // This is the specific URL you just gave me
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxpAYb_wxG6c8BJjR9JO5xScLLPAQyA4vAnlfmhJzt1yZR_9Ck5xhzwhSkhlgUaUqbN/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzS9JbC-hyko-_oHsmOTw8foW61EK5B057qonr36sZevE4IRZrH7jCc3WGs8rKmnMJT/exec';
 
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
-// 1. Convert the responses object into URL-safe form data
-        const formData = new URLSearchParams();
-        for (const key in responses) {
-            // This handles both single answers and arrays (checkboxes)
-            formData.append(key, responses[key]);
-        }
+
+        // 2. Build the data string manually to ensure it's not empty
+        const params = new URLSearchParams();
+        Object.keys(responses).forEach(key => {
+            params.append(key, responses[key]);
+        });
+
+        console.log("Sending data:", params.toString()); // For you to see in the Console
 
         fetch(scriptURL, {
             method: 'POST',
-            mode: 'no-cors', 
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded' // Crucial change
-            },
-            body: formData.toString() // Send the encoded string
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString()
         })
-        .then(function() {
-            alert('Submission successful! Check your NHS Inbox.');
-            // ... rest of your success code
-            // Success Logic
-            alert('Submission successful! Check your NHS Inbox.');
+        .then(() => {
+            alert('Success! Data recorded in Spreadsheet.');
             window.scrollTo(0, 0);
-            questionnaireContainer.innerHTML = `
-                <div class="text-center py-12">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Thank You!</h2>
-                    <p class="text-gray-600">Your responses have been sent to the research team.</p>
-                </div>
-            `;
+            questionnaireContainer.innerHTML = '<div class="text-center py-12"><h2 class="text-2xl font-bold">Thank You!</h2><p>Your responses have been saved.</p></div>';
             document.getElementById('navigation-container').classList.add('hidden');
         })
-        .catch(function(error) {
-            console.error('Error:', error);
-            alert('Submission error. Please check your internet connection.');
+        .catch(err => {
+            console.error('Error:', err);
             submitBtn.disabled = false;
             submitBtn.textContent = 'Submit';
         });
