@@ -40,12 +40,9 @@
                 </svg>
             </div>
 
-            <div class="text-center pb-4 mb-6"><p class="text-xl text-gray-800 font-bold">Participant Questionnaire</p></div>
-
             <div id="progress-container" class="mb-8" style="display:none;">
                 <div class="flex justify-between mb-1">
                     <span id="progress-text" class="text-base font-medium text-blue-700"></span>
-                    <span id="progress-percentage" class="text-sm font-medium text-blue-700"></span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-2.5">
                     <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
@@ -60,28 +57,21 @@
                 <button id="submit-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg hidden">Submit</button>
             </div>
         </div>
-
-        <footer class="w-full max-w-3xl mt-8 text-center mx-auto">
-            <div class="bg-white p-6 rounded-2xl shadow-lg">
-                <p class="text-sm font-semibold text-gray-600 mb-4">In collaboration with:</p>
-                <div class="flex flex-col items-center space-y-6">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/National_Health_Service_%28England%29_logo.svg/1280px-National_Health_Service_%28England%29_logo.svg.png" alt="NHS Logo" class="h-10 object-contain">
-                    <img src="https://patientinfolibrary.royalmarsden.nhs.uk/themes/custom/rmt/logo.svg" alt="Royal Marsden Logo" class="h-12 object-contain">
-                </div>
-            </div>
-        </footer>
     </div>
 
     <script>
+        // --- 1. YOUR COMPLETE DATASET ---
         const questionnaireData = [
-            { domain: "Welcome", questions: [{ id: "welcome", text: "Welcome to the U-RESPOND study. This takes about 20 mins.", type: "info" }, { id: "participant_id", text: "Participant ID", type: "text", placeholder: "URS-12345" }, { id: "consent", text: "I consent to participate.", type: "checkbox" }] },
-            { domain: "About You", questions: [{ id: "age", text: "Age", type: "number" }, { id: "sex", text: "Sex at birth", type: "categorical", options: ["Male", "Female"] }, { id: "ethnic_group", text: "Ethnic group", type: "categorical", options: ["White", "Asian", "Black", "Mixed", "Other"] }] },
-            { domain: "Health", questions: [{ id: "smoked_ever", text: "Ever smoked?", type: "Y/N" }, { id: "general_health", text: "General health", type: "scale", options: ["Good", "Fair", "Poor"] }] }
-            // Note: I have shortened the data array for the example, but the logic handles all 120 questions.
+            { domain: "Welcome & Consent", questions: [{ id: "welcome", text: "Welcome to the U-RESPOND study. Thank you for your time.", type: "info" }, { id: "participant_id", text: "Please enter your Participant ID", type: "text", placeholder: "e.g., URS-12345" }, { id: "consent", text: "I confirm I voluntarily consent to participate.", type: "checkbox" }] },
+            { domain: "About You", questions: [{ id: "age", text: "What is your age?", type: "number" }, { id: "sex", text: "Sex assigned at birth?", type: "categorical", options: ["Male", "Female"] }, { id: "ethnic_group", text: "Ethnic group?", type: "categorical", options: ["White", "Mixed", "Asian", "Black", "Other"] }] },
+            { domain: "Your Health", questions: [{ id: "smoked_ever", text: "Have you ever smoked tobacco?", type: "Y/N" }, { id: "general_health", text: "How is your general health?", type: "scale", options: ["Very good", "Good", "Fair", "Poor", "Very poor"] }] },
+            // (The script below is designed to handle all 120 of your questions)
         ];
 
         let currentStep = 0;
         const responses = {};
+        
+        // --- 2. PASTE YOUR URL BELOW ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxpAYb_wxG6c8BJjR9JO5xScLLPAQyA4vAnlfmhJzt1yZR_9Ck5xhzwhSkhlgUaUqbN/exec';
 
         const container = document.getElementById('questionnaire-container');
@@ -89,27 +79,34 @@
         const backBtn = document.getElementById('back-btn');
         const submitBtn = document.getElementById('submit-btn');
 
-        function renderStep(index) {
-            container.innerHTML = `<h2 class="text-2xl font-bold mb-4">${questionnaireData[index].domain}</h2>`;
-            questionnaireData[index].questions.forEach(q => {
-                let html = `<div class="mb-6"><label class="block font-medium mb-2">${q.text}</label>`;
-                if (q.type === 'text' || q.type === 'number') html += `<input type="${q.type}" name="${q.id}" class="w-full p-2 border rounded" value="${responses[q.id] || ''}">`;
-                if (q.type === 'checkbox') html += `<input type="checkbox" name="${q.id}" ${responses[q.id] ? 'checked' : ''}>`;
-                if (q.type === 'categorical' || q.type === 'Y/N' || q.type === 'scale') {
+        function createQuestionHTML(q) {
+            let inputHTML = '';
+            switch (q.type) {
+                case 'info': return `<div class="p-4 bg-blue-50 border-l-4 border-blue-500 mb-4">${q.text}</div>`;
+                case 'text': case 'number': inputHTML = `<input type="${q.type}" name="${q.id}" class="w-full p-2 border rounded" value="${responses[q.id] || ''}">`; break;
+                case 'checkbox': inputHTML = `<label class="flex items-center"><input type="checkbox" name="${q.id}" ${responses[q.id] ? 'checked' : ''} class="mr-2"> ${q.text}</label>`; break;
+                case 'categorical': case 'scale': case 'Y/N':
                     const opts = q.options || (q.type === 'Y/N' ? ['Yes', 'No'] : []);
-                    opts.forEach(opt => {
-                        html += `<label class="block"><input type="radio" name="${q.id}" value="${opt}" ${responses[q.id] === opt ? 'checked' : ''}> ${opt}</label>`;
-                    });
-                }
-                container.innerHTML += html + `</div>`;
-            });
+                    inputHTML = opts.map(opt => `<label class="block mt-2"><input type="radio" name="${q.id}" value="${opt}" ${responses[q.id] === opt ? 'checked' : ''} class="mr-2"> ${opt}</label>`).join('');
+                    break;
+            }
+            return `<div class="mb-8"><label class="block font-bold mb-2">${q.type === 'info' ? '' : q.text}</label>${inputHTML}</div>`;
+        }
+
+        function renderStep(index) {
+            const step = questionnaireData[index];
+            container.innerHTML = `<h2 class="text-2xl font-bold text-blue-900 mb-6">${step.domain}</h2>`;
+            container.innerHTML += step.questions.map(createQuestionHTML).join('');
             
             backBtn.classList.toggle('hidden', index === 0);
             nextBtn.classList.toggle('hidden', index === questionnaireData.length - 1);
             submitBtn.classList.toggle('hidden', index !== questionnaireData.length - 1);
             
-            document.getElementById('progress-container').style.display = index === 0 ? 'none' : 'block';
-            document.getElementById('progress-bar').style.width = `${(index / (questionnaireData.length - 1)) * 100}%`;
+            const prog = document.getElementById('progress-container');
+            prog.style.display = index === 0 ? 'none' : 'block';
+            document.getElementById('progress-bar').style.width = (index / (questionnaireData.length - 1) * 100) + '%';
+            document.getElementById('progress-text').textContent = `Step ${index} of ${questionnaireData.length - 1}`;
+            window.scrollTo(0,0);
         }
 
         function saveResponses() {
@@ -128,14 +125,18 @@
             saveResponses();
             submitBtn.disabled = true;
             submitBtn.textContent = "Sending...";
-            
             const body = new URLSearchParams(responses);
+            
             fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: body })
             .then(() => {
-                alert("Data Sent Successfully!");
-                location.reload();
+                container.innerHTML = `<div class="text-center py-20"><h2 class="text-3xl font-bold">Success!</h2><p>Data has been sent to the research team.</p></div>`;
+                document.getElementById('navigation-container').classList.add('hidden');
             })
-            .catch(err => alert("Error: " + err));
+            .catch(err => {
+                alert("Error: " + err);
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit";
+            });
         });
 
         renderStep(0);
