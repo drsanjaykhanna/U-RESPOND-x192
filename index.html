@@ -904,7 +904,7 @@ submitBtn.addEventListener('click', function() {
             headers: {
                 'Content-Type': 'text/plain' // Change 'application/json' to 'text/plain'
             },
-            body: JSON.stringify(responses)
+            body: new URLSearchParams(responses)
         })
         .then(function() {
             // Success Logic
