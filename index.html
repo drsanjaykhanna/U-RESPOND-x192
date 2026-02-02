@@ -895,22 +895,21 @@ submitBtn.addEventListener('click', function() {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
 
-        // We use 'no-cors' but send the body as a simple string 
-        // This is the most reliable way to hit a Google Script
-  fetch(scriptURL, {
+// Inside your index.html submit handler
+const formData = new URLSearchParams();
+for (const key in responses) {
+    formData.append(key, responses[key]);
+}
+
+fetch(scriptURL, {
     method: 'POST',
-    mode: 'no-cors', 
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: new URLSearchParams(responses).toString() 
-        })
-        .then(() => {
-            // Because we used 'no-cors', we won't get a confirmation back,
-            // but the data will arrive. We trigger the success UI manually.
-            alert('Data sent! Check your Sent folder in 10 seconds.');
-            location.reload(); 
-        })
+    mode: 'no-cors',
+    body: formData
+})
+.then(() => {
+    alert("Success! Check your Email and Spreadsheet.");
+    location.reload();
+});
         .catch(err => {
             alert('Network Error: ' + err.message);
             submitBtn.disabled = false;
