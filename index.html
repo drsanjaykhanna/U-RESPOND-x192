@@ -895,17 +895,25 @@ submitBtn.addEventListener('click', function() {
 
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
+// 1. Convert the responses object into URL-safe form data
+        const formData = new URLSearchParams();
+        for (const key in responses) {
+            // This handles both single answers and arrays (checkboxes)
+            formData.append(key, responses[key]);
+        }
 
-        // We use 'no-cors' to ensure the browser doesn't block the request
-      fetch(scriptURL, {
+        fetch(scriptURL, {
             method: 'POST',
             mode: 'no-cors', 
+            cache: 'no-cache',
             headers: {
-                'Content-Type': 'text/plain' 
+                'Content-Type': 'application/x-www-form-urlencoded' // Crucial change
             },
-            body: JSON.stringify(responses) // Ensure it is sending the 'responses' object
+            body: formData.toString() // Send the encoded string
         })
         .then(function() {
+            alert('Submission successful! Check your NHS Inbox.');
+            // ... rest of your success code
             // Success Logic
             alert('Submission successful! Check your NHS Inbox.');
             window.scrollTo(0, 0);
