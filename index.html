@@ -130,8 +130,10 @@
 </head>
 <body class="bg-gray-50">
     <div class="container mx-auto max-w-3xl p-4 sm:p-8">
-        <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-lg">
+        <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-lg relative">
             
+            <button id="dev-toggle" class="absolute top-4 right-4 w-3 h-3 rounded-full bg-gray-100 transition-colors duration-200 focus:outline-none z-50 cursor-pointer" title=""></button>
+
             <div class="flex justify-center items-center py-4 border-b mb-6">
                 <svg class="h-16 sm:h-20" viewBox="0 0 250 60" xmlns="http://www.w3.org/2000/svg">
                     <style>
@@ -163,8 +165,7 @@
             </div>
 
             <div id="questionnaire-container">
-                <!-- Questions will be dynamically inserted here -->
-            </div>
+                </div>
 
             <div id="navigation-container" class="mt-8 flex justify-between items-center">
                 <button id="back-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out">Back</button>
@@ -188,7 +189,6 @@
                 <div class="flex flex-col items-center space-y-6">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/National_Health_Service_%28England%29_logo.svg/1280px-National_Health_Service_%28England%29_logo.svg.png" alt="NHS Logo" class="h-10 object-contain">
                     <img src="https://patientinfolibrary.royalmarsden.nhs.uk/themes/custom/rmt/logo.svg" alt="Royal Marsden Logo" class="h-12 object-contain">
-                     <img src="https://www.southampton.ac.uk/img/ctu/SCTU%20logos/SCTU%20Logo%20(mediabin%20resized).jpg?csf=1&web=1&e=wbeGJs" alt="Southampton Clinical Trials Unit Logo" class="h-16 object-contain">
                 </div>
             </div>
         </footer>
@@ -363,11 +363,12 @@
                     { id: "modality_concern_false_positives", text: "To what extent are you concerned about false positives from a blood test?", type: "scale", options: ["Not at all concerned", "Slightly concerned", "Moderately concerned", "Very concerned", "Extremely concerned"] },
                     { id: "fn_explainer", text: "A 'false negative' is when a test fails to detect cancer that is actually there, giving false reassurance.", type: "info" },
                     { id: "modality_concern_false_negatives", text: "To what extent are you concerned about false negatives from a blood test?", type: "scale", options: ["Not at all concerned", "Slightly concerned", "Moderately concerned", "Very concerned", "Extremely concerned"] },
+                    { id: "modality_w2p_explainer", text: "The next question asks about paying for a test. Health economists use these hypothetical questions to understand how much people value different healthcare features. There is no plan to charge for NHS screening.", type: "info" },
                     { id: "modality_w2p", text: "If a blood test could detect lung cancer early, how much would you pay to avoid a 10% risk of late-stage diagnosis?", type: "categorical", options: ["£0", "£1 - £20", "£21 - £50", "£51 - £100", "More than £100", "I would not pay"] }
                 ]
             },
             {
-                domain: "Discrete Choice Experiment (Part 1 of 2)",
+                domain: "Comparing Screening Options (Part 1 of 2)",
                 questions: [
                     { 
                         id: "dce_master_explainer",
@@ -394,7 +395,7 @@
                 ]
             },
             {
-                domain: "Discrete Choice Experiment (Part 2 of 2)",
+                domain: "Comparing Screening Options (Part 2 of 2)",
                 questions: [
                     { id: "dce_task_7", type: "dce_task", text: "Choice 1 of 6", options: { optionA: { "Test Type": "Blood Test (at GP)", "Detection Rate": "85 out of 100", "False Alarm Rate": "10 in 100", "Follow-up": "Repeat the test", "Cost": "£75" }, optionB: { "Test Type": "CT Scan (at hospital)", "Detection Rate": "90 out of 100", "False Alarm Rate": "1 in 100", "Follow-up": "Immediate hospital referral for biopsy", "Cost": "£0" }}},
                     { id: "dce_task_8", type: "dce_task", text: "Choice 2 of 6", options: { optionA: { "Test Type": "Home Test (finger-prick)", "Detection Rate": "95 out of 100", "False Alarm Rate": "1 in 100", "Follow-up": "A CT Scan", "Cost": "£25" }, optionB: { "Test Type": "Blood Test (at GP)", "Detection Rate": "90 out of 100", "False Alarm Rate": "5 in 100", "Follow-up": "Repeat the test", "Cost": "£75" }}},
@@ -462,6 +463,7 @@
         // --- APPLICATION LOGIC ---
         let currentStep = 0;
         const responses = {};
+        let devMode = false; // SECRET DEVELOPER TOGGLE VARIABLE
 
         const questionnaireContainer = document.getElementById('questionnaire-container');
         const backBtn = document.getElementById('back-btn');
@@ -473,6 +475,19 @@
         const progressPercentage = document.getElementById('progress-percentage');
         const messageBox = document.getElementById('message-box');
         const messageText = document.getElementById('message-text');
+        const devToggleBtn = document.getElementById('dev-toggle');
+
+        // Secret Developer Toggle Logic
+        devToggleBtn.addEventListener('click', () => {
+            devMode = !devMode;
+            if (devMode) {
+                devToggleBtn.classList.remove('bg-gray-100');
+                devToggleBtn.classList.add('bg-green-400');
+            } else {
+                devToggleBtn.classList.remove('bg-green-400');
+                devToggleBtn.classList.add('bg-gray-100');
+            }
+        });
 
         function renderStep(stepIndex) {
             const steps = document.querySelectorAll('.step');
@@ -599,18 +614,20 @@
                     }).join('');
 
                     inputHTML = `
-                        <table class="dce-table">
-                            <thead>
-                                <tr>
-                                    <th>Feature</th>
-                                    <th>Option A</th>
-                                    <th>Option B</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${tableRows}
-                            </tbody>
-                        </table>
+                        <div class="overflow-x-auto">
+                            <table class="dce-table">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Option A</th>
+                                        <th>Option B</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableRows}
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="mt-6">
                             <p class="text-center font-medium text-gray-700">Which option would you choose?</p>
                             <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -825,6 +842,45 @@
 
         function validateStep() {
             hideMessage();
+            saveResponses(); // Ensure the latest inputs are saved before checking
+
+            // *** BYPASS VALIDATION IF SECRET TOGGLE IS ON ***
+            if (devMode) return true;
+
+            const currentStepData = questionnaireData[currentStep];
+            let isValid = true;
+
+            for (const q of currentStepData.questions) {
+                const wrapper = document.getElementById(`question-wrapper-${q.id}`);
+                
+                // Only check questions that are currently visible on screen
+                if (wrapper && !wrapper.classList.contains('hidden')) {
+                    
+                    // Skip 'info' blocks and explicitly optional questions
+                    if (q.type === 'info' || q.optional === true) continue;
+
+                    const response = responses[q.id];
+
+                    // For arrays (checkboxes), check if it's empty
+                    if (Array.isArray(response)) {
+                        if (response.length === 0) {
+                            isValid = false;
+                            break;
+                        }
+                    } 
+                    // For text, radios, and scales, check if null, undefined, or empty string
+                    else if (response === undefined || response === null || response === '') {
+                        isValid = false;
+                        break;
+                    }
+                }
+            }
+
+            if (!isValid) {
+                showMessage('Please complete all required fields before continuing.', 'error');
+                return false;
+            }
+
             return true; 
         }
         
