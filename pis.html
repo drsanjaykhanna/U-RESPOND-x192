@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U-RESPOND Study: Participant Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+        }
+        .icon-wrapper {
+            background-color: #dbeafe;
+            color: #1e3a8a;
+            border-radius: 50%;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 14px 0 rgb(0 0 0 / 8%);
+        }
+        .card {
+            background-color: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.05), 0 4px 6px -2px rgb(0 0 0 / 0.05);
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -10px rgb(0 0 0 / 0.07), 0 8px 15px -4px rgb(0 0 0 / 0.05);
+        }
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            line-height: 1.3;
+        }
+        .section-text {
+            font-size: 1.125rem;
+            color: #374151;
+            line-height: 1.7;
+        }
+        .highlight-box {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .contact-card {
+            background-color: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+        }
+        .contact-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border-color: #3b82f6;
+        }
+        .contact-card-icon {
+            color: #1e3a8a;
+            margin: 0 auto 1rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <div class="max-w-4xl mx-auto p-4 sm:p-8 md:p-12">
+
+        <!-- Header Section -->
+        <header class="text-center mb-16">
+            <div class="flex justify-center items-center mb-6">
+                <svg class="h-20 sm:h-24" viewBox="0 0 250 60" xmlns="http://www.w3.org/2000/svg">
+                    <style>
+                      .title-font { font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800; fill: #1e3a8a; }
+                      .subtitle-font { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; fill: #3b82f6; letter-spacing: 0.1em; }
+                    </style>
+                    <g>
+                      <circle cx="30" cy="30" r="20" stroke="#3b82f6" stroke-width="4" fill="none"/>
+                      <circle cx="30" cy="30" r="12" stroke="#3b82f6" stroke-width="4" fill="none"/>
+                      <circle cx="30" cy="30" r="4" fill="#3b82f6"/>
+                      <text x="70" y="30" class="title-font">U-RESPOND</text>
+                      <text x="70" y="48" class="subtitle-font">STUDY</text>
+                    </g>
+                  </svg>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight leading-tight">Help Us Improve Lung Cancer Screening</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Your views can shape the future of NHS lung health services. Learn more about the U-RESPOND study.</p>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="space-y-12">
+
+            <!-- What is this study about? -->
+            <section class="card text-center">
+                <div class="flex justify-center">
+                    <div class="icon-wrapper">
+                        <i data-lucide="search" class="w-8 h-8"></i>
+                    </div>
+                </div>
+                <h2 class="section-title">What is this study about?</h2>
+                <p class="section-text mt-4">
+                    The U-RESPOND study aims to improve the NHS Lung Cancer Screening programme. We want to understand what people think about lung screening, including newer methods like blood tests. Your feedback will help us make screening services better and more accessible for everyone.
+                </p>
+            </section>
+
+            <!-- Why have I been invited? -->
+            <section class="card text-center">
+                <div class="flex justify-center">
+                    <div class="icon-wrapper">
+                        <i data-lucide="users" class="w-8 h-8"></i>
+                    </div>
+                </div>
+                <h2 class="section-title">Why have I been invited?</h2>
+                <div class="section-text mt-4 text-left">
+                    <p class="mb-4 text-center">We need to hear from people with a range of experiences. You have been invited because you are in one of two important groups:</p>
+                    <ul class="list-disc list-inside space-y-2 max-w-md mx-auto">
+                        <li>You have <strong>attended</strong> a Lung Health Check.</li>
+                        <li>You were <strong>invited</strong> to a Lung Health Check but chose not to attend.</li>
+                    </ul>
+                    <p class="mt-4 text-center">Your unique viewpoint is essential for us to get a complete picture.</p>
+                </div>
+            </section>
+
+            <!-- Do I have to take part? -->
+            <section class="card text-center">
+                <div class="flex justify-center">
+                    <div class="icon-wrapper">
+                        <i data-lucide="heart-handshake" class="w-8 h-8"></i>
+                    </div>
+                </div>
+                <h2 class="section-title">Is participation voluntary?</h2>
+                <p class="section-text mt-4">
+                    Absolutely. Taking part is completely your choice. <strong>Your decision will not affect your current or future medical care in any way.</strong> You are free to stop at any time without giving a reason.
+                </p>
+            </section>
+
+            <!-- What will I have to do? -->
+            <section class="card text-center">
+                <div class="flex justify-center">
+                    <div class="icon-wrapper">
+                        <i data-lucide="clipboard-list" class="w-8 h-8"></i>
+                    </div>
+                </div>
+                <h2 class="section-title">What's involved?</h2>
+                <p class="section-text mt-4">
+                    If you agree to take part, you will be asked to complete a questionnaire. This is a non-commercial, NHS-led study to help improve future screening services. Some questions will ask you to make choices between different hypothetical test options. These may include questions about 'cost' to help us understand what people value most. Please be reassured this is a standard research method and <strong>there is no plan to charge for NHS screening.</strong>
+                </p>
+                <div class="mt-6 grid md:grid-cols-2 gap-6 text-left">
+                    <div class="highlight-box flex items-center">
+                        <i data-lucide="clock" class="w-10 h-10 text-blue-500 mr-4 shrink-0"></i>
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-800">Time Commitment</h3>
+                            <p class="text-gray-600">It takes about <strong>20 minutes</strong> to complete.</p>
+                        </div>
+                    </div>
+                    <div class="highlight-box flex items-center">
+                         <i data-lucide="smartphone" class="w-10 h-10 text-blue-500 mr-4 shrink-0"></i>
+                         <div>
+                            <h3 class="font-bold text-lg text-gray-800">How to Complete</h3>
+                            <p class="text-gray-600">You can do it online or over the phone.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Benefits & Risks -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card text-center">
+                    <div class="flex justify-center">
+                        <div class="icon-wrapper">
+                           <i data-lucide="gift" class="w-8 h-8"></i>
+                        </div>
+                    </div>
+                    <h2 class="section-title">Are there benefits?</h2>
+                    <p class="section-text mt-4">
+                        While there's no direct benefit to you, your valuable input will help improve lung cancer screening for future generations.
+                    </p>
+                </div>
+                <div class="card text-center">
+                    <div class="flex justify-center">
+                        <div class="icon-wrapper">
+                            <i data-lucide="shield-check" class="w-8 h-8"></i>
+                        </div>
+                    </div>
+                    <h2 class="section-title">Are there risks?</h2>
+                    <p class="section-text mt-4">
+                        There are no risks. We only ask for about 20 minutes of your time. You don't have to answer any question you're not comfortable with.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Confidentiality -->
+            <section class="card text-center">
+                <div class="flex justify-center">
+                    <div class="icon-wrapper">
+                        <i data-lucide="lock" class="w-8 h-8"></i>
+                    </div>
+                </div>
+                <h2 class="section-title">How is my information kept confidential?</h2>
+                <p class="section-text mt-4">
+                    Your personal details will be stored securely and kept separate from your questionnaire answers. Your answers will be linked only by a unique participant ID. The file linking your ID to your personal details will be held securely at one site. Once you have consented or declined to participate, your personal contact information will be deleted from our records.
+                </p>
+            </section>
+            
+            <!-- Study Review -->
+             <section class="card text-center">
+                <div class="flex justify-center">
+                    <div class="icon-wrapper">
+                        <i data-lucide="file-check-2" class="w-8 h-8"></i>
+                    </div>
+                </div>
+                <h2 class="section-title">Who has reviewed this study?</h2>
+                <p class="section-text mt-4">
+                    All NHS research is reviewed by an independent Research Ethics Committee to protect your interests. This study has been reviewed and given a favourable opinion.
+                </p>
+            </section>
+
+
+            <!-- Contact Section -->
+            <section class="gradient-bg p-8 sm:p-12 rounded-3xl">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">How to Get Involved</h2>
+                    <p class="mt-4 text-lg text-gray-700 max-w-xl mx-auto">Choose the most convenient way to express your interest or ask questions.</p>
+                </div>
+                
+                <div class="mt-10 space-y-6">
+                    <!-- Option 1: Button -->
+                    <a href="#EOI_LINK_PENDING" id="eoi-button" class="contact-card !bg-blue-600 hover:!bg-blue-700 !text-white hover:!border-blue-700 !flex-row items-center justify-center p-6">
+                        <i data-lucide="mouse-pointer-click" class="w-8 h-8 sm:w-10 sm:h-10 mr-4 sm:mr-6 shrink-0"></i>
+                        <div class="text-left">
+                            <h3 class="text-lg sm:text-xl font-bold">Express Interest Online</h3>
+                            <p class="mt-1 text-blue-100 text-sm sm:text-base">Click here to fill out our secure online form.</p>
+                        </div>
+                    </a>
+
+                    <!-- Row for 2 smaller cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Option 2: Email (Clickable) -->
+                        <a href="mailto:URESPOND@rmh.nhs.uk" class="contact-card justify-center">
+                            <i data-lucide="mail" class="contact-card-icon w-10 h-10"></i>
+                            <h3 class="text-lg font-bold text-gray-800">Email Us</h3>
+                            <p class="mt-2 text-base text-blue-600 font-semibold break-all">URESPOND@rmh.nhs.uk</p>
+                        </a>
+
+                        <!-- Option 3: Call (Clickable on phones) -->
+                        <a href="tel:02012345678" class="contact-card justify-center">
+                            <i data-lucide="phone" class="contact-card-icon w-10 h-10"></i>
+                            <h3 class="text-lg font-bold text-gray-800">Call Us</h3>
+                            <p class="mt-2 text-lg text-gray-800 font-semibold">020 1234 5678</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-20 pt-10 border-t border-gray-200">
+             <div class="text-center mb-8">
+                <p class="font-semibold text-gray-600">In collaboration with:</p>
+                <div class="mt-6 flex flex-wrap justify-center items-center gap-x-8 gap-y-6">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/National_Health_Service_%28England%29_logo.svg/1280px-National_Health_Service_%28England%29_logo.svg.png" alt="NHS Logo" class="h-8 sm:h-10 object-contain" onerror="this.style.display='none'">
+                    <img src="https://patientinfolibrary.royalmarsden.nhs.uk/themes/custom/rmt/logo.svg" alt="Royal Marsden Logo" class="h-10 sm:h-12 object-contain" onerror="this.style.display='none'">
+                    <img src="https://www.southampton.ac.uk/img/ctu/SCTU%20logos/SCTU%20Logo%20(mediabin%20resized).jpg?csf=1&web=1&e=wbeGJs" alt="Southampton Clinical Trials Unit Logo" class="h-12 sm:h-16 object-contain" onerror="this.style.display='none'">
+                </div>
+            </div>
+            <div class="text-center text-xs text-gray-500 mt-8">
+                <p><strong>IRAS Number:</strong> 320123 | <strong>R&D reference number:</strong> RMH-1234</p>
+                <p>Participant Information Sheet Version 2.0, Dated 11 Sep 2025</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
