@@ -516,10 +516,12 @@
                 case 'info':
                     return `<div class="p-4 my-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg"><p class="text-gray-700 leading-relaxed">${question.text}</p></div>`;
                 case 'checkbox':
-                    return `<label class="flex items-start mt-4 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
-                                <input type="checkbox" id="${question.id}" name="${question.id}" class="form-checkbox mt-1">
-                                <span class="ml-3 text-gray-700">${question.text}</span>
-                            </label>`;
+                    return `<div id="question-wrapper-${question.id}" class="my-6 question-wrapper">
+                                <label class="flex items-start mt-4 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                                    <input type="checkbox" id="${question.id}" name="${question.id}" class="form-checkbox mt-1">
+                                    <span class="ml-3 text-gray-700">${question.text}</span>
+                                </label>
+                            </div>`;
                 case 'multi_checkbox':
                     inputHTML = `<div class="${optionWrapperClass}">` + question.options.map(opt => `
                         <label class="flex items-center mt-2">
