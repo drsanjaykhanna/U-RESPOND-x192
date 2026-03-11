@@ -956,6 +956,8 @@
         const formData = new URLSearchParams();
         for (const key in responses) {
             const value = Array.isArray(responses[key]) ? responses[key].join(', ') : responses[key];
+            // Skip null/undefined/empty values — don't send unfilled fields
+            if (value === null || value === undefined || value === 'null' || value === '') continue;
             formData.append(key, value);
         }
 
