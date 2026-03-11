@@ -202,7 +202,7 @@
                 questions: [
                     {
                         id: "welcome",
-                        text: "Welcome to the U-RESPOND study questionnaire. Thank you for taking the time to contribute to this important research. This questionnaire will take approximately 20 minutes to complete.",
+                        text: "Welcome to the U-RESPOND study questionnaire. Thank you for taking part in this important research.<br><br>This questionnaire asks about your views and experiences related to lung cancer screening. It should take about <strong>20 minutes</strong> to complete. There are no right or wrong answers — we are interested in your honest opinions.",
                         type: "info"
                     },
                     {
@@ -213,7 +213,7 @@
                     },
                     {
                         id: "consent_confirm",
-                        text: "I confirm that I have read the participant information sheet and I voluntarily consent to participate in this study. I understand my data will be kept confidential and used for research purposes only.",
+                        text: "I confirm that I have read the Participant Information Sheet and I freely agree to take part in this study. I understand that my answers will be kept strictly confidential and used for research purposes only.",
                         type: "checkbox"
                     }
                 ]
@@ -223,19 +223,19 @@
                 questions: [
                     {
                         id: "demographics_explainer",
-                        text: "These questions help us understand if we are hearing from a diverse range of people from all backgrounds. Your answers are kept completely confidential.",
+                        text: "The following questions help us check that we are hearing from people of all backgrounds. All your answers are kept strictly confidential.",
                         type: "info"
                     },
-                    { id: "age", text: "What is your age?", type: "number", placeholder: "e.g., 65" },
-                    { id: "sex", text: "What is your sex assigned at birth?", type: "categorical", options: ["Male", "Female"] },
+                    { id: "age", text: "What is your age (in years)?", type: "number", placeholder: "e.g., 65" },
+                    { id: "sex", text: "What was your sex assigned at birth?", type: "categorical", options: ["Male", "Female"] },
                     { id: "ethnic_group", text: "What is your ethnic group?", type: "categorical", options: ["White", "Mixed/Multiple ethnic groups", "Asian/Asian British", "Black/African/Caribbean/Black British", "Other ethnic group", "Prefer not to say"] },
                     { id: "ethnic_group_other", text: "Please specify your ethnic group", type: "text", placeholder: "Please specify", condition: { id: "ethnic_group", value: "Other ethnic group" }, optional: true },
                     { id: "education_level", text: "What is the highest level of education you have completed?", type: "categorical", options: ["No formal qualifications", "GCSEs/O-Levels or equivalent", "A-Levels or equivalent", "Undergraduate degree", "Postgraduate degree", "Prefer not to say"] },
-                    { id: "employment_status", text: "Which of the following best describes your current employment status?", type: "categorical", options: ["Employed", "Self-employed", "Unemployed", "Retired", "Student", "Other"] },
+                    { id: "employment_status", text: "Which of the following best describes your current work situation?", type: "categorical", options: ["Employed", "Self-employed", "Unemployed", "Retired", "Student", "Other"] },
                     { id: "employment_details", text: "Please tell us more about your employment (select all that apply):", type: "multi_checkbox", options: ["I work full-time", "I work part-time", "I have more than one job", "I am on a zero-hours contract"], condition: { id: "employment_status", value: "Employed" }, optional: true },
                     { id: "postcode", text: "What is the first part of your postcode?", type: "text", placeholder: "e.g., SW3" },
-                    { id: "primary_language", text: "What is your primary language spoken at home?", type: "text", placeholder: "e.g., English" },
-                    { id: "general_health", text: "How would you describe your general health?", type: "scale", options: ["Very good", "Good", "Fair", "Poor", "Very poor"] },
+                    { id: "primary_language", text: "What is the main language spoken in your home?", type: "text", placeholder: "e.g., English" },
+                    { id: "general_health", text: "In general, how would you rate your overall health?", type: "scale", options: ["Very good", "Good", "Fair", "Poor", "Very poor"] },
                 ]
             },
             {
@@ -243,46 +243,46 @@
                 questions: [
                     // --- Smoking History ---
                     { id: "smoked_ever", text: "Have you ever smoked tobacco?", type: "Y/N" },
-                    { id: "smoke_currently", text: "Do you currently smoke cigarettes/tobacco?", type: "Y/N", condition: { id: "smoked_ever", value: "Yes" } },
+                    { id: "smoke_currently", text: "Do you currently smoke?", type: "Y/N", condition: { id: "smoked_ever", value: "Yes" } },
                     
                     // Questions for FORMER smokers
                     { id: "years_smoked_ex", text: "How many years did you smoke for?", type: "number", placeholder: "e.g., 20", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'No'}] } },
-                    { id: "cigs_per_day_ex", text: "On average, how many cigarettes did you smoke per day (how much tobacco did you use)?", type: "text", placeholder: "e.g., 15 cigarettes", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'No'}] } },
-                    { id: "years_quit", text: "How many years has it been since you last smoked regularly?", type: "number", placeholder: "e.g., 10", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'No'}] } },
+                    { id: "cigs_per_day_ex", text: "On average, how many cigarettes (or equivalent) did you smoke per day?", type: "text", placeholder: "e.g., 15 cigarettes", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'No'}] } },
+                    { id: "years_quit", text: "How many years ago did you stop smoking regularly?", type: "number", placeholder: "e.g., 10", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'No'}] } },
 
                     // Questions for CURRENT smokers
                     { id: "years_smoked_current", text: "How many years have you smoked for?", type: "number", placeholder: "e.g., 30", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'Yes'}] } },
-                    { id: "cigs_per_day_current", text: "On average, how many cigarettes/tobacco do you smoke per day?", type: "text", placeholder: "e.g., 20 cigarettes", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'Yes'}] } },
+                    { id: "cigs_per_day_current", text: "On average, how many cigarettes (or equivalent) do you smoke per day?", type: "text", placeholder: "e.g., 20 cigarettes", condition: { logic: 'AND', rules: [{id: 'smoked_ever', value: 'Yes'}, {id: 'smoke_currently', value: 'Yes'}] } },
 
                     // --- Screening & Cancer History ---
-                    { id: "other_screening", text: "Have you ever participated in cancer screening before (e.g. breast, colon cancer and/or cervical)?", type: "Y/N" },
+                    { id: "other_screening", text: "Have you ever taken part in any other type of cancer screening (for example, breast, bowel, or cervical)?", type: "Y/N" },
                     { id: "lung_invite", text: "Have you ever received an invitation for an NHS Lung Health Check?", type: "Y/N/Unsure" },
-                    { id: "lung_attended_completed", text: "Did you attend and complete the screening?", type: "Y/N", condition: { id: "lung_invite", value: "Yes" } },
+                    { id: "lung_attended_completed", text: "Did you attend and complete the Lung Health Check?", type: "Y/N", condition: { id: "lung_invite", value: "Yes" } },
                     { id: "lung_check_date", text: "Approximately when did you have the lung health check?", type: "text", placeholder: "e.g., 2023, or last year", condition: { id: "lung_attended_completed", value: "Yes" } },
                     
                     { id: "diagnosed_lc", text: "Have you ever been diagnosed with lung cancer?", type: "Y/N" },
                     { id: "diagnosed_lc_year", text: "Approximately which year were you diagnosed?", type: "text", placeholder: "e.g., 2022", condition: { id: "diagnosed_lc", value: "Yes" } },
 
-                    { id: "family_diagnosed_lc", text: "Has a close family member (e.g. parent or sibling) ever been diagnosed with lung cancer?", type: "Y/N" },
+                    { id: "family_diagnosed_lc", text: "Has a close family member (for example, a parent, brother, or sister) ever been diagnosed with lung cancer?", type: "Y/N" },
                     { id: "family_diagnosed_lc_year", text: "Approximately which year were they diagnosed?", type: "text", placeholder: "e.g., 2020", condition: { id: "family_diagnosed_lc", value: "Yes" } },
                     
-                    { id: "investigations_negative", text: "Have you had any investigations (e.g., scans, tests) for suspected lung cancer that turned out to be negative or non-cancerous?", type: "Y/N" },
+                    { id: "investigations_negative", text: "Have you ever had tests or scans for a possible lung cancer that turned out to show no cancer?", type: "Y/N" },
                     { id: "investigations_negative_date", text: "Approximately when did this happen?", type: "text", placeholder: "e.g., last year", condition: { id: "investigations_negative", value: "Yes" } },
                 ]
             },
             {
                 domain: "What You Know About Lung Screening",
                 questions: [
-                    { id: "awareness_lcs", text: "How would you describe your awareness of national lung cancer screening?", type: "scale", options: ["Not at all aware", "Slightly aware", "Moderately aware", "Very aware", "Extremely aware"] },
-                    { id: "lcs_sources", text: "From what sources have you heard about lung cancer screening? (Select all that apply)", type: "multi_checkbox", options: ["GP or nurse", "NHS letter or leaflet", "TV or radio", "Newspaper or magazine", "Online (e.g., websites, social media)", "Family or friends", "Other"], optional: true },
+                    { id: "awareness_lcs", text: "How aware are you of the NHS national lung cancer screening programme?", type: "scale", options: ["Not at all aware", "Slightly aware", "Moderately aware", "Very aware", "Extremely aware"] },
+                    { id: "lcs_sources", text: "Where have you heard about lung cancer screening? (Please select all that apply)", type: "multi_checkbox", options: ["GP or nurse", "NHS letter or leaflet", "TV or radio", "Newspaper or magazine", "Online (e.g., websites, social media)", "Family or friends", "Other"], optional: true },
                     { id: "lcs_purpose", text: "What do you think is the main purpose of a lung health check?", type: "categorical", options: ["To find lung cancer early", "To prevent lung cancer", "To check for other lung problems", "I'm not sure"] },
-                    { id: "lcs_scantype", text: "What type of scan is typically used for lung cancer screening?", type: "categorical", options: ["A CT scan", "An X-ray", "An MRI scan", "A blood test", "I'm not sure"] },
-                    { id: "lcs_importance", text: "How important do you think screening for lung cancer is?", type: "slider", min: 0, max: 100, minLabel: "Not important at all", maxLabel: "Extremely important" },
-                    { id: "knowledge_statement_1", text: "Lung cancer screening helps detect cancer early when it's easier to treat.", type: "T/F/DK" },
+                    { id: "lcs_scantype", text: "What type of test is usually used for lung cancer screening?", type: "categorical", options: ["A CT scan", "An X-ray", "An MRI scan", "A blood test", "I'm not sure"] },
+                    { id: "lcs_importance", text: "How important do you think it is to screen for lung cancer?", type: "slider", min: 0, max: 100, minLabel: "Not important at all", maxLabel: "Extremely important" },
+                    { id: "knowledge_statement_1", text: "Lung cancer screening can detect cancer at an early stage, when it is easier to treat.", type: "T/F/DK" },
                     { id: "knowledge_statement_2", text: "Lung cancer screening reduces the risk of dying from lung cancer.", type: "T/F/DK" },
                     { id: "knowledge_statement_3", text: "Lung cancer screening is only recommended for people who currently smoke.", type: "T/F/DK" },
-                    { id: "knowledge_statement_4", text: "Lung cancer screening always finds cancer if it's present.", type: "T/F/DK" },
-                    { id: "knowledge_statement_5", text: "Lung cancer screening often results in further, more invasive tests.", type: "T/F/DK" }
+                    { id: "knowledge_statement_4", text: "Lung cancer screening will always detect cancer if it is present.", type: "T/F/DK" },
+                    { id: "knowledge_statement_5", text: "Lung cancer screening often leads to further tests or procedures.", type: "T/F/DK" }
                 ]
             },
             {
@@ -290,81 +290,81 @@
                 questions: [
                     {
                         id: "benefit_for_whom",
-                        text: "In your opinion, what kind of person would benefit most from having a lung health check?",
+                        text: "In your opinion, who would benefit most from having a lung health check?",
                         type: "textarea",
                         placeholder: "e.g., people with a long smoking history, people with worries..."
                     },
-                    { id: "benefit_main", text: "What is the main benefit of this test?", type: "textarea", placeholder: "Type your answer here..." },
-                    { id: "motivation_intro", text: "For the following statements, please rate how much you agree or disagree.", type: "info" },
-                    { id: "motivation_detect_early", text: "Knowing that lung cancer screening can detect cancer at an early, more treatable stage is a major motivation for me.", type: "agreement_scale" },
-                    { id: "motivation_increase_survival", text: "I would participate in screening to increase my chances of surviving lung cancer if I were to get it.", type: "agreement_scale" },
-                    { id: "motivation_peace_of_mind", text: "Lung cancer screening offers me a sense of peace of mind about my health.", type: "agreement_scale" },
-                    { id: "motivation_responsibility", text: "I believe that people at risk for lung cancer have a responsibility to get screened.", type: "agreement_scale" },
-                    { id: "motivation_doctor_rec", text: "My doctor's strong recommendation would be a primary reason for me to get screened.", type: "agreement_scale" },
-                    { id: "motivation_family_worry", text: "I would participate in screening to reduce my family's worry about my health.", type: "agreement_scale" },
+                    { id: "benefit_main", text: "In your own words, what do you think is the main benefit of lung cancer screening?", type: "textarea", placeholder: "Type your answer here..." },
+                    { id: "motivation_intro", text: "Please rate how much you agree or disagree with each of the following statements.", type: "info" },
+                    { id: "motivation_detect_early", text: "The fact that screening can find cancer early, when it is easier to treat, would be a strong reason for me to take part.", type: "agreement_scale" },
+                    { id: "motivation_increase_survival", text: "I would take part in screening to improve my chances of survival if I developed lung cancer.", type: "agreement_scale" },
+                    { id: "motivation_peace_of_mind", text: "Having a lung cancer screening test would give me peace of mind about my health.", type: "agreement_scale" },
+                    { id: "motivation_responsibility", text: "I believe that people at risk of lung cancer have a duty to get screened.", type: "agreement_scale" },
+                    { id: "motivation_doctor_rec", text: "A strong recommendation from my doctor would be one of the main reasons for me to get screened.", type: "agreement_scale" },
+                    { id: "motivation_family_worry", text: "I would take part in screening to ease my family's worry about my health.", type: "agreement_scale" },
                     { id: "motivation_ranking", text: "Which of the following is the MOST important reason for you to consider screening?", type: "categorical", options: ["Detecting cancer early", "Increasing my chances of survival", "Giving me peace of mind", "It is my responsibility", "My doctor's recommendation", "Reducing my family's worry"] }
                 ]
             },
             {
                 domain: "Your Views on Lung Screening",
                 questions: [
-                    { id: "perceived_risk_population", text: "Out of 100 people, how many do you think will develop lung cancer in their lifetime?", type: "slider", min: 0, max: 100, minLabel: "0", maxLabel: "100" },
-                    { id: "perceived_risk_personal", text: "What is your personal chance of developing lung cancer in your lifetime?", type: "slider", min: 0, max: 100, minLabel: "No chance", maxLabel: "Certain" },
-                    { id: "seriousness_diagnosis", text: "How serious do you believe a diagnosis of lung cancer is?", type: "scale", options: ["Not at all serious", "Slightly serious", "Moderately serious", "Very serious", "Extremely serious"] },
-                    { id: "barrier_main_reason", text: "What is the main reason to not have a lung cancer screen?", type: "textarea", placeholder: "Type your answer here..." },
-                    { id: "barrier_intro", text: "To what extent would the following make you less likely to have a lung cancer screen:", type: "info" },
-                    { id: "concern_radiation", text: "I am worried about the radiation exposure from a CT scan", type: "agreement_scale" },
+                    { id: "perceived_risk_population", text: "Out of every 100 people in the general population, how many do you think will develop lung cancer in their lifetime?", type: "slider", min: 0, max: 100, minLabel: "0", maxLabel: "100" },
+                    { id: "perceived_risk_personal", text: "How would you rate your own personal chance of developing lung cancer in your lifetime?", type: "slider", min: 0, max: 100, minLabel: "No chance", maxLabel: "Certain" },
+                    { id: "seriousness_diagnosis", text: "How serious do you think a diagnosis of lung cancer would be?", type: "scale", options: ["Not at all serious", "Slightly serious", "Moderately serious", "Very serious", "Extremely serious"] },
+                    { id: "barrier_main_reason", text: "In your own words, what do you think is the main reason someone might choose not to have lung cancer screening?", type: "textarea", placeholder: "Type your answer here..." },
+                    { id: "barrier_intro", text: "Please rate how much each of the following would put you off having a lung cancer screening test:", type: "info" },
+                    { id: "concern_radiation", text: "I would be worried about the radiation from a CT scan.", type: "agreement_scale" },
                     { id: "concern_false_positive", text: "I would be anxious about receiving a 'false alarm' (a result that suggests a problem when there isn't one).", type: "agreement_scale" },
-                    { id: "concern_finding_cancer", text: "The thought of finding out I have cancer makes me anxious", type: "agreement_scale" },
-                    { id: "concern_inconvenience", text: "The screening process seems inconvenient (e.g., travel, time off work)", type: "agreement_scale" },
-                    { id: "concern_stigma", text: "I feel there is a stigma associated with smoking that makes me reluctant to engage with screening", type: "agreement_scale" },
-                    { id: "concern_follow_up", text: "I am worried about follow-up procedures if something suspicious is found", type: "agreement_scale" },
-                    { id: "concern_no_difference", text: "I don't believe screening would make a difference for me personally", type: "agreement_scale" },
-                    { id: "concern_uncomfortable", text: "I would feel uncomfortable undergoing a lung cancer screening scan", type: "agreement_scale" },
-                    { id: "concern_lack_of_info", text: "Lack of information about lung cancer screening is a barrier for me", type: "agreement_scale" },
+                    { id: "concern_finding_cancer", text: "The thought of finding out I might have cancer would make me anxious.", type: "agreement_scale" },
+                    { id: "concern_inconvenience", text: "The screening process seems inconvenient (for example, travelling to the appointment or taking time off work).", type: "agreement_scale" },
+                    { id: "concern_stigma", text: "I feel there is a stigma around smoking that would make me reluctant to go for screening.", type: "agreement_scale" },
+                    { id: "concern_follow_up", text: "I would be worried about what further tests might be needed if something unusual were found.", type: "agreement_scale" },
+                    { id: "concern_no_difference", text: "I do not believe that screening would make a difference for me personally.", type: "agreement_scale" },
+                    { id: "concern_uncomfortable", text: "I would feel physically uncomfortable having a lung cancer screening scan.", type: "agreement_scale" },
+                    { id: "concern_lack_of_info", text: "Not having enough information about lung cancer screening would put me off.", type: "agreement_scale" },
                     { id: "barrier_ranking", text: "Which of the following is the BIGGEST concern or reason that would make you less likely to have a lung cancer screen?", type: "categorical", options: ["Worry about radiation from the CT scan", "Anxiety about a false positive result", "Anxiety about finding out I have cancer", "Inconvenience (travel, time off work)", "Stigma associated with smoking", "Worry about follow-up procedures", "Belief that screening won't make a difference", "Discomfort with the scan itself", "Lack of information"] },
-                    { id: "psych_hopeful", text: "How hopeful would you feel about the potential benefits?", type: "scale", options: ["Not at all hopeful", "Slightly hopeful", "Moderately hopeful", "Very hopeful", "Extremely hopeful"] },
-                    { id: "psych_guilt", text: "How much guilt, if any, do you feel about your smoking history in relation to lung cancer?", type: "scale", options: ["No guilt at all", "A little guilt", "A moderate amount of guilt", "A lot of guilt", "A great deal of guilt"], condition: { id: "smoked_ever", value: "Yes" } },
-                    { id: "psych_feelings", text: "When I think about getting lung cancer screening, I feel... (select all that apply)", type: "multi_checkbox", options: ["Anxious", "Hopeful", "Relieved", "Nervous", "Indifferent", "Empowered"], optional: true },
+                    { id: "psych_hopeful", text: "If you were offered lung cancer screening, how hopeful would you feel about the possible benefits?", type: "scale", options: ["Not at all hopeful", "Slightly hopeful", "Moderately hopeful", "Very hopeful", "Extremely hopeful"] },
+                    { id: "psych_guilt", text: "How much guilt, if any, do you feel about your smoking history when you think about lung cancer?", type: "scale", options: ["No guilt at all", "A little guilt", "A moderate amount of guilt", "A lot of guilt", "A great deal of guilt"], condition: { id: "smoked_ever", value: "Yes" } },
+                    { id: "psych_feelings", text: "When you think about having lung cancer screening, which of these words describe how you feel? (Select all that apply)", type: "multi_checkbox", options: ["Anxious", "Hopeful", "Relieved", "Nervous", "Indifferent", "Empowered"], optional: true },
                     { id: "psych_personal_risk", text: "I feel that my personal risk of developing lung cancer is high.", type: "agreement_scale" },
-                    { id: "psych_consequences", text: "The consequences of lung cancer (e.g., treatment, side effects) are very severe.", type: "agreement_scale" },
-                    { id: "psych_confident_attend", text: "I feel confident that I can organise and attend lung cancer screening appointments.", type: "agreement_scale" },
-                    { id: "psych_social_norm", text: "Most people important to me (e.g., family, close friends) would want me to get lung cancer screening.", type: "agreement_scale" },
-                    { id: "psych_useful", text: "I believe participating in lung cancer screening would be useful for me.", type: "agreement_scale" },
-                    { id: "psych_pleasant", text: "I believe participating in lung cancer screening would be a pleasant experience.", type: "agreement_scale" },
-                    { id: "psych_control", text: "I have complete control over whether I participate in lung cancer screening.", type: "agreement_scale" },
+                    { id: "psych_consequences", text: "The consequences of lung cancer (for example, treatment and side effects) would be very severe.", type: "agreement_scale" },
+                    { id: "psych_confident_attend", text: "I feel confident that I could organise and attend a lung cancer screening appointment.", type: "agreement_scale" },
+                    { id: "psych_social_norm", text: "Most people who are important to me (for example, family and close friends) would want me to be screened.", type: "agreement_scale" },
+                    { id: "psych_useful", text: "I believe taking part in lung cancer screening would be useful for me.", type: "agreement_scale" },
+                    { id: "psych_pleasant", text: "I believe having a lung cancer screening test would be a pleasant experience.", type: "agreement_scale" },
+                    { id: "psych_control", text: "I have full control over whether or not I take part in lung cancer screening.", type: "agreement_scale" },
                     { id: "psych_fate", text: "My health is mostly determined by fate or luck, not by my own actions.", type: "agreement_scale" },
                     { id: "psych_good_at_planning", text: "I am generally good at planning and remembering my medical appointments.", type: "agreement_scale" },
-                    { id: "psych_judged", text: "I would feel judged by others if I attended lung cancer screening, due to my smoking history.", type: "agreement_scale" },
+                    { id: "psych_judged", text: "I would feel judged by others if I went for lung cancer screening because of my smoking history.", type: "agreement_scale" },
                     { id: "psych_blame", text: "Society tends to blame people who get lung cancer.", type: "agreement_scale" }
                 ]
             },
             {
                 domain: "Different Types of Screening Tests",
                 questions: [
-                    { id: "modality_intro_blood_test", text: "Researchers are developing new types of screening tests. One of the most promising is a blood test that could help find lung cancer early by detecting signs that cancer can release into the blood. While these tests are improving, they are not yet perfect.", type: "info" },
-                    { id: "modality_consider_blood_test", text: "Would you consider having this new blood test?", type: "Y/N" },
-                    { id: "modality_blood_test_routine", text: "If the blood test was added routinely (e.g., to another blood sample you were already giving), would this make you...", type: "scale", options: ["Much less likely to have it", "Less likely", "Equally likely", "More likely", "Much more likely to have it"] },
-                    { id: "modality_blood_test_self_collect", text: "If the blood test was self-collected at home (e.g., a finger-prick test), would this make you...", type: "scale", options: ["Much less likely to have it", "Less likely", "Equally likely", "More likely", "Much more likely to have it"] },
-                    { id: "modality_blood_test_multi_cancer", text: "If the blood test could also detect other types of cancer (not just lung cancer), would this make you...", type: "scale", options: ["Much less likely to have it", "Less likely", "Equally likely", "More likely", "Much more likely to have it"] },
+                    { id: "modality_intro_blood_test", text: "Researchers are developing new ways to screen for lung cancer. One of the most promising is a simple <strong>blood test</strong>. It works by looking for tiny signals in the blood that can be released by cancer cells at an early stage. These tests are still being improved and are not yet perfect.", type: "info" },
+                    { id: "modality_consider_blood_test", text: "Would you consider having this type of blood test for lung cancer screening?", type: "Y/N" },
+                    { id: "modality_blood_test_routine", text: "If the blood test were done at the same time as a blood sample you were already giving (for example, during a routine check-up), would this make you...", type: "scale", options: ["Much less likely to have it", "Less likely", "Equally likely", "More likely", "Much more likely to have it"] },
+                    { id: "modality_blood_test_self_collect", text: "If you could do the blood test yourself at home using a simple finger-prick kit, would this make you...", type: "scale", options: ["Much less likely to have it", "Less likely", "Equally likely", "More likely", "Much more likely to have it"] },
+                    { id: "modality_blood_test_multi_cancer", text: "If the blood test could also check for other types of cancer (not just lung cancer), would this make you...", type: "scale", options: ["Much less likely to have it", "Less likely", "Equally likely", "More likely", "Much more likely to have it"] },
                     
-                    { id: "modality_blood_test_in_addition", text: "Would you consider having this new blood test in addition to a scan?", type: "scale", options: ["Very unlikely", "Unlikely", "Neutral", "Likely", "Very likely"] },
-                    { id: "modality_blood_test_instead", text: "Would you consider having this new blood test instead of a scan?", type: "scale", options: ["Very unlikely", "Unlikely", "Neutral", "Likely", "Very likely"] },
+                    { id: "modality_blood_test_in_addition", text: "How likely would you be to have this blood test <strong>in addition to</strong> a CT scan?", type: "scale", options: ["Very unlikely", "Unlikely", "Neutral", "Likely", "Very likely"] },
+                    { id: "modality_blood_test_instead", text: "How likely would you be to have this blood test <strong>instead of</strong> a CT scan?", type: "scale", options: ["Very unlikely", "Unlikely", "Neutral", "Likely", "Very likely"] },
                     { id: "modality_preference_ct_blood_same", text: "Overall, would you be more likely to have a CT scan, more likely to have the new blood test, or are you equally likely to have either?", type: "categorical", options: ["More likely to have a CT scan", "More likely to have a blood test", "Equally likely to have either"] },
 
-                    { id: "modality_agreement_intro", text: "Thinking about the new blood test, to what extent do you agree or disagree with the following statements:", type: "info" },
+                    { id: "modality_agreement_intro", text: "Thinking about this new blood test, please say how much you agree or disagree with each statement below:", type: "info" },
                     { id: "modality_agree_convenient", text: "A blood test for lung cancer screening would be more convenient than a CT scan.", type: "agreement_scale" },
                     { id: "modality_agree_less_anxious", text: "I would be less anxious about a blood test than a CT scan.", type: "agreement_scale" },
-                    { id: "modality_agree_more_likely", text: "I would be more likely to participate in screening if it involved a blood test.", type: "agreement_scale" },
+                    { id: "modality_agree_more_likely", text: "I would be more likely to take part in screening if it involved a blood test.", type: "agreement_scale" },
                     { id: "modality_agree_less_invasive", text: "A blood test would feel less invasive than a CT scan.", type: "agreement_scale" },
-                    { id: "modality_agree_less_radiation", text: "I would be less concerned about radiation exposure with a blood test.", type: "agreement_scale" },
-                    { id: "modality_agree_accuracy_worry", text: "I would worry if a blood test was not as accurate as a CT scan.", type: "agreement_scale" },
-                    { id: "fp_explainer", text: "A 'false positive' is when a test incorrectly suggests a person might have cancer, leading to unnecessary worry and further tests.", type: "info" },
-                    { id: "modality_concern_false_positives", text: "To what extent are you concerned about false positives from a blood test?", type: "scale", options: ["Not at all concerned", "Slightly concerned", "Moderately concerned", "Very concerned", "Extremely concerned"] },
-                    { id: "fn_explainer", text: "A 'false negative' is when a test fails to detect cancer that is actually there, giving false reassurance.", type: "info" },
-                    { id: "modality_concern_false_negatives", text: "To what extent are you concerned about false negatives from a blood test?", type: "scale", options: ["Not at all concerned", "Slightly concerned", "Moderately concerned", "Very concerned", "Extremely concerned"] },
-                    { id: "modality_w2p_explainer", text: "The next question asks about paying for a test. Health economists use these hypothetical questions to understand how much people value different healthcare features. There is no plan to charge for NHS screening.", type: "info" },
-                    { id: "modality_w2p", text: "If a blood test could detect lung cancer early, how much would you pay to avoid a 10% risk of late-stage diagnosis?", type: "categorical", options: ["£0", "£1 - £20", "£21 - £50", "£51 - £100", "More than £100", "I would not pay"] }
+                    { id: "modality_agree_less_radiation", text: "I would worry less about radiation with a blood test than with a CT scan.", type: "agreement_scale" },
+                    { id: "modality_agree_accuracy_worry", text: "I would be concerned if a blood test were not as accurate as a CT scan.", type: "agreement_scale" },
+                    { id: "fp_explainer", text: "A <strong>false positive</strong> (also called a 'false alarm') happens when a test result suggests there may be cancer when, in fact, there is none. This can lead to unnecessary worry and further tests.", type: "info" },
+                    { id: "modality_concern_false_positives", text: "How concerned would you be about getting a false positive result from a blood test?", type: "scale", options: ["Not at all concerned", "Slightly concerned", "Moderately concerned", "Very concerned", "Extremely concerned"] },
+                    { id: "fn_explainer", text: "A <strong>false negative</strong> happens when a test result says everything is normal when, in fact, cancer is present. This can give false reassurance.", type: "info" },
+                    { id: "modality_concern_false_negatives", text: "How concerned would you be about getting a false negative result from a blood test?", type: "scale", options: ["Not at all concerned", "Slightly concerned", "Moderately concerned", "Very concerned", "Extremely concerned"] },
+                    { id: "modality_w2p_explainer", text: "The next question asks about the value you place on early detection. Health economists use hypothetical questions like this to understand what matters most to people when planning healthcare services. <strong>There is no plan to charge for NHS screening — this question is purely hypothetical.</strong>", type: "info" },
+                    { id: "modality_w2p", text: "Imagine that without any screening, 10 out of every 100 lung cancers would be found at a late stage, when treatment is much harder. Now imagine a new blood test could find these cancers earlier, when treatment is more likely to succeed.<br><br><strong>If this blood test were not available free on the NHS, how much would you be willing to pay for it?</strong>", type: "categorical", options: ["£0", "£1 - £20", "£21 - £50", "£51 - £100", "More than £100", "I would not pay"] }
                 ]
             },
             {
@@ -373,18 +373,19 @@
                     { 
                         id: "dce_master_explainer",
                         type: "info",
-                        text: `On the next few pages, we will ask you to make some choices. Imagine you are choosing between different types of lung health checks. No test is perfect, so you will have to trade-off between the good and bad features of each test.<br><br>
-                   To help you choose, we will show you 5 key features for each test. Please read the explanations below carefully.<br><br>
-                   <strong>1. Test Type: Where you take the test.</strong><br>
-                   This could be a <strong>CT Scan</strong> (at a hospital), a <strong>Blood Test</strong> (at your GP), or a <strong>Home Test</strong> (a finger-prick kit).<br><br>
-                   <strong>2. Detection Rate: How good the test is at finding cancer.</strong><br>
-                   This tells you: Out of 100 people who <strong>do have</strong> early lung cancer, how many the test will correctly find. A higher number is better.<br><br>
-                   <strong>3. False Alarm Rate (False Positives): How often the test gives a wrong 'red flag'.</strong><br>
-                   This tells you: Out of 100 people who <strong>do not have</strong> lung cancer, how many will be incorrectly told they might have a problem (this is also called a 'false positive'). A lower number is better.<br><br>
-                   <strong>4. Follow-up Procedure: What happens after a 'red flag'.</strong><br>
-                   If the first test shows a possible problem, this is the very next step. It could be to <strong>Repeat the same test</strong>, have a <strong>CT Scan</strong>, or an <strong>immediate hospital referral for biopsy</strong>.<br><br>
-                   <strong>5. Cost: A one-off payment for the test.</strong><br>To help the NHS understand which features are most important to people when planning future services, we ask you to imagine there was a one-off cost for the test. <strong>This is a completely hypothetical question to understand what you value most. There is no plan to charge for NHS screening.</strong><br><br>
-                   On the next pages, you will see two options at a time. Please choose the one you would prefer. There are no right or wrong answers.`
+                        text: `On the next few pages, you will be asked to make some choices. Imagine you are choosing between different types of lung health checks. No test is perfect, so each option has a mix of good and less good features.<br><br>
+                   To help you decide, we will show you <strong>5 key features</strong> for each test. Please read the explanations below carefully before you begin.<br><br>
+                   <strong>1. Test Type — Where you take the test.</strong><br>
+                   This could be a <strong>CT Scan</strong> (at a hospital), a <strong>Blood Test</strong> (at your GP surgery), or a <strong>Home Test</strong> (a finger-prick kit sent to your home).<br><br>
+                   <strong>2. Detection Rate — How good the test is at finding cancer.</strong><br>
+                   Out of 100 people who <strong>do have</strong> early-stage lung cancer, this is how many the test would correctly identify. A <span style="color:green;font-weight:bold;">higher number is better</span>.<br><br>
+                   <strong>3. False Alarm Rate — How often the test gives an incorrect warning.</strong><br>
+                   Out of 100 people who <strong>do not have</strong> lung cancer, this is how many would be incorrectly told they might have a problem (a 'false positive'). A <span style="color:red;font-weight:bold;">lower number is better</span>.<br><br>
+                   <strong>4. Follow-up Procedure — What happens next if the test flags a possible problem.</strong><br>
+                   This could be to <strong>repeat the same test</strong>, have a <strong>CT Scan</strong>, or be given an <strong>immediate hospital referral for biopsy</strong>.<br><br>
+                   <strong>5. Cost — A hypothetical one-off payment for the test.</strong><br>
+                   To help the NHS understand which features matter most to people, we ask you to imagine there is a one-off cost for the test. <strong>This is completely hypothetical — there is no plan to charge for NHS screening.</strong><br><br>
+                   On each of the next pages, you will see two options side by side. Please choose the one you would prefer. There are no right or wrong answers.`
                     },
                     { id: "dce_task_1", type: "dce_task", text: "Choice 1 of 6", options: { optionA: { "Test Type": "CT Scan (at hospital)", "Detection Rate": "95 out of 100", "False Alarm Rate": "10 in 100", "Follow-up": "A CT Scan", "Cost": "£0" }, optionB: { "Test Type": "Blood Test (at GP)", "Detection Rate": "90 out of 100", "False Alarm Rate": "1 in 100", "Follow-up": "A CT Scan", "Cost": "£25" }}},
                     { id: "dce_task_2", type: "dce_task", text: "Choice 2 of 6", options: { optionA: { "Test Type": "Home Test (finger-prick)", "Detection Rate": "85 out of 100", "False Alarm Rate": "1 in 100", "Follow-up": "Repeat the test", "Cost": "£0" }, optionB: { "Test Type": "CT Scan (at hospital)", "Detection Rate": "90 out of 100", "False Alarm Rate": "5 in 100", "Follow-up": "Immediate hospital referral for biopsy", "Cost": "£75" }}},
@@ -410,7 +411,7 @@
                 questions: [
                     {
                         id: "comm_opt_in",
-                        text: "The next two sections contain optional questions about public health messages used in posters and letters. Your feedback here can help improve how the NHS communicates with people. Would you like to answer these questions?",
+                        text: "The next two sections are optional. They ask about public health messages used in posters and letters. Your feedback could help improve how the NHS communicates with people about screening. Would you like to answer these questions?",
                         type: "Y/N"
                     }
                 ]
@@ -453,9 +454,9 @@
             {
                 domain: "Technology & AI",
                 questions: [
-                    { id: "info_confidence", text: "How confident do you feel that you could access all the information you need about lung cancer screening?", type: "scale", options: ["Not at all confident", "Slightly confident", "Moderately confident", "Very confident", "Extremely confident"] },
-                    { id: "ai_familiarity", text: "How familiar are you with using Artificial Intelligence (AI) or 'chatbots' in healthcare (e.g., online symptom checkers)?", type: "scale", options: ["Not at all familiar", "Slightly familiar", "Moderately familiar", "Very familiar", "Extremely familiar"] },
-                    { id: "ai_interest", text: "We are developing an AI-powered tool (like a chatbot) to help people understand lung cancer screening. Would you be interested in answering more questions in the future about how such a tool could be designed?", type: "Y/N" }
+                    { id: "info_confidence", text: "How confident do you feel that you could find all the information you need about lung cancer screening?", type: "scale", options: ["Not at all confident", "Slightly confident", "Moderately confident", "Very confident", "Extremely confident"] },
+                    { id: "ai_familiarity", text: "How familiar are you with using Artificial Intelligence (AI) or chatbots in healthcare (for example, online symptom checkers)?", type: "scale", options: ["Not at all familiar", "Slightly familiar", "Moderately familiar", "Very familiar", "Extremely familiar"] },
+                    { id: "ai_interest", text: "We are developing an AI-powered tool (similar to a chatbot) to help people learn about lung cancer screening. Would you be interested in being contacted in the future to help us design this tool?", type: "Y/N" }
                 ]
             }
         ];
