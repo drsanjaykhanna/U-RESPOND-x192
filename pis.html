@@ -80,6 +80,68 @@
             color: #1e3a8a;
             margin: 0 auto 1rem;
         }
+        /* Hero CTA button */
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #2563eb;
+            color: white;
+            font-weight: 700;
+            font-size: 1.125rem;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            text-decoration: none;
+            box-shadow: 0 8px 25px -5px rgba(37, 99, 235, 0.4);
+            transition: all 0.3s ease;
+            animation: gentle-pulse 3s ease-in-out infinite;
+        }
+        .hero-cta:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px -5px rgba(37, 99, 235, 0.5);
+        }
+        @keyframes gentle-pulse {
+            0%, 100% { box-shadow: 0 8px 25px -5px rgba(37, 99, 235, 0.4); }
+            50% { box-shadow: 0 8px 35px -5px rgba(37, 99, 235, 0.6); }
+        }
+        /* Sticky mobile bottom bar */
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            z-index: 50;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: center;
+        }
+        .sticky-cta a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: #2563eb;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            width: 100%;
+            max-width: 400px;
+        }
+        .sticky-cta a:hover { background: #1d4ed8; }
+        /* Add bottom padding so sticky bar doesn't cover content */
+        body { padding-bottom: 5rem; }
+        /* Hide sticky on larger screens where hero CTA is clearly visible */
+        @media (min-width: 768px) {
+            .sticky-cta { display: none; }
+            body { padding-bottom: 0; }
+        }
     </style>
 </head>
 <body class="bg-slate-50">
@@ -105,6 +167,13 @@
             </div>
             <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight leading-tight">Help Us Improve Lung Cancer Screening</h1>
             <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Your views can shape the future of NHS lung health services. Learn more about the U-RESPOND study.</p>
+            <div class="mt-8">
+                <a href="#EOI_LINK_PENDING" class="hero-cta">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                    Register Your Interest
+                </a>
+                <p class="mt-3 text-sm text-gray-500">Takes less than 2 minutes</p>
+            </div>
         </header>
 
         <!-- Main Content Grid -->
@@ -272,6 +341,14 @@
             </div>
         </footer>
 
+    </div>
+
+    <!-- Sticky mobile CTA bar -->
+    <div class="sticky-cta">
+        <a href="#EOI_LINK_PENDING">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            Register Your Interest
+        </a>
     </div>
 
     <script>
