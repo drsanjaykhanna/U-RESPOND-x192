@@ -25,25 +25,26 @@
         var DEST = 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=awNiYX2v00a0tBDuJhAZ34nBZ77wHClDo0MkFM7gKcRUOVNXSUFCVkdKR1BZMDNOTjRWOU9FOUs2Ti4u';
         var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpAYb_wxG6c8BJjR9JO5xScLLPAQyA4vAnlfmhJzt1yZR_9Ck5xhzwhSkhlgUaUqbN/exec';
 
-        // Collect basic analytics (no PII)
-        var data = {
-            action:   'track',
-            page:     'eoi',
-            referrer: document.referrer || '(direct)',
-            ua:       navigator.userAgent,
-            ts:       new Date().toISOString()
-        };
-
-        // Fire beacon then redirect — sendBeacon is fire-and-forget
+        // Log click using fetch + keepalive (same method the questionnaire uses — proven to work with GAS)
         try {
-            navigator.sendBeacon(SCRIPT_URL, JSON.stringify(data));
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: new URLSearchParams({
+                    action:   'track',
+                    page:     'eoi',
+                    referrer: document.referrer || '(direct)',
+                    ua:       navigator.userAgent,
+                    ts:       new Date().toISOString()
+                }),
+                keepalive: true
+            }).catch(function(){});
         } catch(e) {
-            // Fallback: image pixel GET (ignored if sendBeacon worked)
+            // Fallback: image pixel GET
             new Image().src = SCRIPT_URL + '?action=track&page=eoi&ts=' + Date.now();
         }
 
-        // Redirect after tiny delay to let beacon dispatch
-        setTimeout(function() { window.location.replace(DEST); }, 150);
+        // Redirect after tiny delay to let fetch dispatch
+        setTimeout(function() { window.location.replace(DEST); }, 200);
     })();
     </script>
 </body>
