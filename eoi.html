@@ -2,19 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=awNiYX2v00a0tBDuJhAZ34nBZ77wHClDo0MkFM7gKcRUOVNXSUFCVkdKR1BZMDNOTjRWOU9FOUs2Ti4u">
     <title>U-RESPOND: Expression of Interest</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f0f9ff; color: #1e3a8a; }
         .container { text-align: center; padding: 2rem; }
         p { font-size: 1.1rem; }
         a { color: #2563eb; }
+        .spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid #dbeafe; border-top-color: #2563eb; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 0.5rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
+    <!-- Fallback for users with JS disabled -->
+    <noscript><meta http-equiv="refresh" content="0;url=https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=awNiYX2v00a0tBDuJhAZ34nBZ77wHClDo0MkFM7gKcRUOVNXSUFCVkdKR1BZMDNOTjRWOU9FOUs2Ti4u"></noscript>
 </head>
 <body>
     <div class="container">
-        <p>Redirecting to the Expression of Interest form...</p>
-        <p>If you are not redirected, <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=awNiYX2v00a0tBDuJhAZ34nBZ77wHClDo0MkFM7gKcRUOVNXSUFCVkdKR1BZMDNOTjRWOU9FOUs2Ti4u">click here</a>.</p>
+        <p><span class="spinner"></span> Redirecting to the Expression of Interest form...</p>
+        <p>If you are not redirected, <a id="fallback" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=awNiYX2v00a0tBDuJhAZ34nBZ77wHClDo0MkFM7gKcRUOVNXSUFCVkdKR1BZMDNOTjRWOU9FOUs2Ti4u">click here</a>.</p>
     </div>
+
+    <script>
+    (function() {
+        var DEST = 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=awNiYX2v00a0tBDuJhAZ34nBZ77wHClDo0MkFM7gKcRUOVNXSUFCVkdKR1BZMDNOTjRWOU9FOUs2Ti4u';
+        var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpAYb_wxG6c8BJjR9JO5xScLLPAQyA4vAnlfmhJzt1yZR_9Ck5xhzwhSkhlgUaUqbN/exec';
+
+        // Collect basic analytics (no PII)
+        var data = {
+            action:   'track',
+            page:     'eoi',
+            referrer: document.referrer || '(direct)',
+            ua:       navigator.userAgent,
+            ts:       new Date().toISOString()
+        };
+
+        // Fire beacon then redirect — sendBeacon is fire-and-forget
+        try {
+            navigator.sendBeacon(SCRIPT_URL, JSON.stringify(data));
+        } catch(e) {
+            // Fallback: image pixel GET (ignored if sendBeacon worked)
+            new Image().src = SCRIPT_URL + '?action=track&page=eoi&ts=' + Date.now();
+        }
+
+        // Redirect after tiny delay to let beacon dispatch
+        setTimeout(function() { window.location.replace(DEST); }, 150);
+    })();
+    </script>
 </body>
 </html>
