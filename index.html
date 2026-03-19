@@ -871,8 +871,8 @@
                             break;
                         }
                     } 
-                    // For text, radios, and scales, check if null, undefined, or empty string
-                    else if (response === undefined || response === null || response === '') {
+                    // For text, radios, scales, AND unchecked checkboxes (boolean false)
+                    else if (response === undefined || response === null || response === '' || response === false) {
                         isValid = false;
                         break;
                     }
