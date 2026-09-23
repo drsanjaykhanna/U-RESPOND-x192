@@ -25,13 +25,23 @@
         var DEST = 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=awNiYX2v00a0tBDuJhAZ34nBZ77wHClDo0MkFM7gKcRUOVNXSUFCVkdKR1BZMDNOTjRWOU9FOUs2Ti4u';
         var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpAYb_wxG6c8BJjR9JO5xScLLPAQyA4vAnlfmhJzt1yZR_9Ck5xhzwhSkhlgUaUqbN/exec';
 
-        // Track click via image pixel GET — no CORS issues, works cross-origin on every browser
+        // Wait for the tracking endpoint before leaving so the request is not cancelled.
         var ref = encodeURIComponent(document.referrer || '(direct)');
         var ua = encodeURIComponent(navigator.userAgent);
-        new Image().src = SCRIPT_URL + '?action=track&page=eoi&referrer=' + ref + '&ua=' + ua + '&ts=' + Date.now();
+        var trackUrl = SCRIPT_URL + '?action=track&page=eoi&referrer=' + ref + '&ua=' + ua + '&ts=' + Date.now();
+        var redirected = false;
+        var redirect = function() {
+            if (redirected) return;
+            redirected = true;
+            window.location.replace(DEST);
+        };
+        var tracker = new Image();
+        tracker.onload = redirect;
+        tracker.onerror = redirect;
+        tracker.src = trackUrl;
 
-        // Redirect after short delay to let the GET request fire
-        setTimeout(function() { window.location.replace(DEST); }, 300);
+        // Never leave a participant waiting if the tracker is unavailable.
+        setTimeout(redirect, 3000);
     })();
     </script>
 </body>
